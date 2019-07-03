@@ -10,9 +10,9 @@ namespace LibraryApp.Models
     public class Customer
     {
         public int Id { get; set; }
-        [MaxLength(20), Required]
+        [MaxLength(30), Required]
         public string Name { get; set; }
-        [MaxLength(20), Required]
+        [MaxLength(30), Required]
         public string Surname { get; set; }
         [Required, MaxLength(10), MinLength(10)]
         public string PhoneNumber { get; set; }

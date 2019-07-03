@@ -25,19 +25,14 @@ namespace LibraryApp.Forms
             InitializeComponent();
         }
 
-        private void BtnOrders_Click(object sender, EventArgs e)
+        private void Button1_Click(object sender, EventArgs e)
         {
-            BtnOrders.BackColor = Color.FromArgb(250, 130, 0);
-            BtnBooks.BackColor = Color.FromArgb(230, 100, 0);
-            BtnCustomers.BackColor = Color.FromArgb(230, 100, 0);
-            BtnManagers.BackColor = Color.FromArgb(230, 100, 0);
-
-            PnlOrders.Visible = true;
-            PnlBooks.Visible = false;
-            PnlCustomers.Visible = false;
-            PnlManagers.Visible = false;
-
+            this.Hide();
+            LoginForm loginForm = new LoginForm();
+            loginForm.Show();
         }
+
+
 
 
         #region Books
@@ -221,6 +216,14 @@ namespace LibraryApp.Forms
             AllBooks();
         }
 
+        private void CbbSearchBooks_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            AllBooks();
+            CbbFilterBooks.SelectedIndex = 0;
+            CbbSortBooks.SelectedIndex = 0;
+
+        }
+
         public Boolean ChechTxtboxsBooks()
         {
             if (TxtNameBook.Text == "Kitabın adı" || TxtWritterBook.Text == "Yazarı" || TxtPriceBook.Text == "Qiyməti" || TxtCountBook.Text == "Sayı" || !decimal.TryParse(TxtPriceBook.Text, out decimal a) || !int.TryParse(TxtCountBook.Text, out int b))
@@ -296,6 +299,11 @@ namespace LibraryApp.Forms
 
         private void DgvBooks_RowHeaderMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
         {
+            LblUnderlineNameBook.BackColor = Color.Orange;
+            LblUnderlineWritterBook.BackColor = Color.Orange;
+            LblUnderlinePriceBook.BackColor = Color.Orange;
+            LblUnderlineCountBook.BackColor = Color.Orange;
+
             int IdBook = Convert.ToInt32(DgvBooks.Rows[e.RowIndex].Cells[0].Value);
             selectedBook = context.Books.Find(IdBook);
             TxtNameBook.Text = selectedBook.Name;
@@ -351,9 +359,14 @@ namespace LibraryApp.Forms
         private void CbbSortBooks_SelectedIndexChanged(object sender, EventArgs e)
         {
             AllBooks();
+            CbbSearchBooks.SelectedIndex = 0;
+            TxtSearchBooks.Text = "Axtarış edin...";
+            TxtSearchBooks.ForeColor = Color.Silver;
+
         }
 
         #endregion
+
 
         #region Methots for Button's Placeholder
 
@@ -431,14 +444,15 @@ namespace LibraryApp.Forms
                 TxtCountBook.ForeColor = Color.Silver;
             }
         }
-
         private void TxtSearchBooks_Enter(object sender, EventArgs e)
         {
+            CbbFilterBooks.SelectedIndex = 0;
+            CbbSortBooks.SelectedIndex = 0;
+
             if (TxtSearchBooks.Text == "Axtarış edin...")
             {
                 TxtSearchBooks.Text = "";
                 TxtSearchBooks.ForeColor = Color.Black;
-                PnlFilterBooks.Enabled = false;
             }
         }
 
@@ -448,7 +462,6 @@ namespace LibraryApp.Forms
             {
                 TxtSearchBooks.Text = "Axtarış edin...";
                 TxtSearchBooks.ForeColor = Color.Silver;
-                PnlFilterBooks.Enabled = true;
             }
         }
 
@@ -513,11 +526,13 @@ namespace LibraryApp.Forms
 
         private void TxtSearchCustomers_Enter(object sender, EventArgs e)
         {
+            CbbFilterCustomers.SelectedIndex = 0;
+            CbbSortCustomers.SelectedIndex = 0;
             if (TxtSearchCustomers.Text == "Axtarış edin...")
             {
                 TxtSearchCustomers.Text = "";
                 TxtSearchCustomers.ForeColor = Color.Black;
-                PnlFilterCustomers.Enabled = false;
+                PnlFilterCustomers.Enabled = true;
             }
         }
 
@@ -527,7 +542,6 @@ namespace LibraryApp.Forms
             {
                 TxtSearchCustomers.Text = "Axtarış edin...";
                 TxtSearchCustomers.ForeColor = Color.Silver;
-                PnlFilterCustomers.Enabled = true;
             }
 
         }
@@ -794,6 +808,20 @@ namespace LibraryApp.Forms
         private void CbbSortCustomers_SelectedIndexChanged(object sender, EventArgs e)
         {
             AllCustomers();
+            TxtSearchCustomers.Text = "Axtarış edin...";
+            TxtSearchCustomers.ForeColor = Color.Silver;
+            CbbSearchCustomers.SelectedIndex = 0;
+        }
+
+        private void TxtSearchCustomers_TextChanged(object sender, EventArgs e)
+        {
+            AllCustomers();
+        }
+
+        private void CbbSearchCustomers_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            CbbFilterCustomers.SelectedIndex = 0;
+            CbbSortCustomers.SelectedIndex = 0;
         }
 
         private void BtnAddCustomer_Click(object sender, EventArgs e)
@@ -841,7 +869,6 @@ namespace LibraryApp.Forms
             BtnDeleteCustomer.Visible = true;
         }
 
-
         private void BtnUpdateCustomer_Click(object sender, EventArgs e)
         {
             if (!ChechCustomerTextbox())
@@ -887,6 +914,8 @@ namespace LibraryApp.Forms
 
         #endregion
 
+
+        #region Managers
         private void BtnManagers_Click(object sender, EventArgs e)
         {
             BtnOrders.BackColor = Color.FromArgb(230, 100, 0);
@@ -918,7 +947,7 @@ namespace LibraryApp.Forms
             LblUnderSurnameManager.BackColor = Color.Orange;
             LblUnderUsernameManager.BackColor = Color.Orange;
             LblUnderPasswordManager.BackColor = Color.Orange;
-
+            List<Manager> Manager = context.Managers.Where(c => c.Username == TxtUsernameManager.Text).ToList();
             if (TxtNameManager.Text == "İdarəçinin adı" || TxtSurnameManager.Text == "Soyadı"|| TxtUsernameManager.Text == "İstifadəçi adı"|| TxtPasswordManager.Text == "Parol")
             {
                 if (TxtNameManager.Text == "İdarəçinin adı")
@@ -954,7 +983,14 @@ namespace LibraryApp.Forms
                 LblUnderUsernameManager.BackColor = Color.Maroon;
                 MessageBox.Show("İstifadəçi adındı düzgün yazın. Misal: code.academy@gmail.com");
                 return false;
-            } else if (TxtPasswordManager.Text.Length<8)
+            }
+            else if (Manager.Count!=0)
+            {
+                LblUnderUsernameManager.BackColor = Color.Maroon;
+                MessageBox.Show("Bu istifadəşi adı artıq qeydiyyatdan keçib");
+                return false;
+            }
+            else if (TxtPasswordManager.Text.Length<8)
             {
                 LblUnderPasswordManager.BackColor = Color.Maroon;
                 MessageBox.Show("Parol minimum 8 xarekterdən ibarət olmaləıdır.");
@@ -980,6 +1016,10 @@ namespace LibraryApp.Forms
             TxtUsernameManager.ForeColor = Color.Silver;
             TxtPasswordManager.ForeColor = Color.Silver;
 
+            LblUnderNameManager.BackColor = Color.Orange;
+            LblUnderSurnameManager.BackColor = Color.Orange;
+            LblUnderUsernameManager.BackColor = Color.Orange;
+            LblUnderPasswordManager.BackColor = Color.Orange;
         }
 
         private void BtnAddManager_Click(object sender, EventArgs e)
@@ -998,16 +1038,24 @@ namespace LibraryApp.Forms
             };
             context.Managers.Add(manager);
             context.SaveChanges();
+            MessageBox.Show("İdarəçi əlavə olundu.");
 
+            ClearTextboxManager();
             AllManagers();
 
         }
 
         private void DgvManagers_RowHeaderMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
         {
+            LblUnderNameManager.BackColor = Color.Orange;
+            LblUnderSurnameManager.BackColor = Color.Orange;
+            LblUnderUsernameManager.BackColor = Color.Orange;
+            LblUnderPasswordManager.BackColor = Color.Orange;
+
             BtnAddManager.Visible = false;
             BtnUpdateManager.Visible = true;
             BtnDeleteManager.Visible = true;
+
             int IdManager = Convert.ToInt32(DgvManagers.Rows[e.RowIndex].Cells[0].Value);
             selectedManager = context.Managers.Find(IdManager);
             TxtNameManager.Text = selectedManager.Name;
@@ -1031,6 +1079,11 @@ namespace LibraryApp.Forms
             selectedManager.Surname = TxtSurnameManager.Text;
             selectedManager.Username = TxtUsernameManager.Text;
             selectedManager.Password = TxtPasswordManager.Text;
+
+            BtnAddManager.Visible = true;
+            BtnUpdateManager.Visible = false;
+            BtnDeleteManager.Visible = false;
+
             context.SaveChanges();
             AllManagers();
             ClearTextboxManager();
@@ -1051,11 +1104,32 @@ namespace LibraryApp.Forms
             context.SaveChanges();
             AllManagers();
             ClearTextboxManager();
+
+            BtnAddManager.Visible = true;
+            BtnUpdateManager.Visible = false;
+            BtnDeleteManager.Visible = false;
         }
 
-        private void TxtSearchCustomers_TextChanged(object sender, EventArgs e)
+        #endregion
+
+
+        private void BtnOrders_Click(object sender, EventArgs e)
         {
-            AllCustomers();
+            BtnOrders.BackColor = Color.FromArgb(250, 130, 0);
+            BtnBooks.BackColor = Color.FromArgb(230, 100, 0);
+            BtnCustomers.BackColor = Color.FromArgb(230, 100, 0);
+            BtnManagers.BackColor = Color.FromArgb(230, 100, 0);
+
+            PnlOrders.Visible = true;
+            PnlBooks.Visible = false;
+            PnlCustomers.Visible = false;
+            PnlManagers.Visible = false;
+
+        }
+
+        private void MeanForm_Load(object sender, EventArgs e)
+        {
+            CbbSearchBookandCustomer.SelectedIndex = 0;
         }
 
     }

@@ -18,3 +18,4 @@ C:\Users\Baxruz\source\repos\LibraryApp\LibraryApp\obj\Debug\LibraryApp.Forms.Me
 C:\Users\Baxruz\source\repos\LibraryApp\LibraryApp\obj\Debug\LibraryApp.Migrations.UpdateDatabaseStructur.resources
 C:\Users\Baxruz\source\repos\LibraryApp\LibraryApp\obj\Debug\LibraryApp.Migrations.UpdateCustomer.resources
 C:\Users\Baxruz\source\repos\LibraryApp\LibraryApp\obj\Debug\LibraryApp.Migrations.CorrectedBugCustomerTables.resources
+C:\Users\Baxruz\source\repos\LibraryApp\LibraryApp\obj\Debug\LibraryApp.Migrations.UpdateDataLengthColumns.resources

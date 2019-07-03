@@ -82,6 +82,10 @@
     <Compile Include="Migrations\201907021031482_CorrectedBugCustomerTables.Designer.cs">
       <DependentUpon>201907021031482_CorrectedBugCustomerTables.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201907030921179_UpdateDataLengthColumns.cs" />
+    <Compile Include="Migrations\201907030921179_UpdateDataLengthColumns.Designer.cs">
+      <DependentUpon>201907030921179_UpdateDataLengthColumns.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Book.cs" />
     <Compile Include="Models\Customer.cs" />
@@ -106,6 +110,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201907021031482_CorrectedBugCustomerTables.resx">
       <DependentUpon>201907021031482_CorrectedBugCustomerTables.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201907030921179_UpdateDataLengthColumns.resx">
+      <DependentUpon>201907030921179_UpdateDataLengthColumns.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

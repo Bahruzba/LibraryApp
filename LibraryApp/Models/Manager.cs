@@ -10,13 +10,13 @@ namespace LibraryApp.Models
     public class Manager
     {
         public int Id { get; set; }
-        [MaxLength(20), Required]
+        [MaxLength(30), Required]
         public string Name { get; set; }
-        [MaxLength(20), Required]
+        [MaxLength(30), Required]
         public string Surname { get; set; }
         [MaxLength(50), Required]
         public string Username { get; set; }
-        [MaxLength(20), Required]
+        [MaxLength(30), Required]
         public string Password { get; set; }
     }
 }

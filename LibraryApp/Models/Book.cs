@@ -10,9 +10,9 @@ namespace LibraryApp.Models
     public class Book
     {
         public int Id { get; set; }
-        [MaxLength(20), Required]
+        [MaxLength(50), Required]
         public string Name { get; set; }
-        [MaxLength(40), Required]
+        [MaxLength(50), Required]
         public string Writter { get; set; }
         [Required]
         public decimal MonthlyPrice { get; set; }
