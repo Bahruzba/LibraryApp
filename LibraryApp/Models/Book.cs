@@ -12,6 +12,7 @@ namespace LibraryApp.Models
         public int Id { get; set; }
         [MaxLength(50), Required]
         public string Name { get; set; }
+
         [MaxLength(50), Required]
         public string Writter { get; set; }
         [Required]

@@ -7,13 +7,13 @@ namespace LibraryApp.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.2.0-61023")]
-    public sealed partial class UpdateDatabaseStructur : IMigrationMetadata
+    public sealed partial class UpdateTables : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(UpdateDatabaseStructur));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(UpdateTables));
         
         string IMigrationMetadata.Id
         {
-            get { return "201907011608447_UpdateDatabaseStructur"; }
+            get { return "201907041516099_UpdateTables"; }
         }
         
         string IMigrationMetadata.Source

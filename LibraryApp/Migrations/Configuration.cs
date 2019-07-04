@@ -47,16 +47,22 @@
             context.Managers.AddOrUpdate(Manager1);
             context.SaveChanges();
 
-            Order Order1 = new Order
+            OrderItem OrderItem1 = new OrderItem
             {
-                CustomerId = Customer1.Id,
+                Created = DateTime.Now,
+                CustomerId = Customer1.Id
+            };
+            context.OrderItems.AddOrUpdate(OrderItem1);
+            context.SaveChanges();
+
+            Order Order1 = new Order 
+            {
                 BookId = Book1.Id,
-                StartRentTime = DateTime.Now,
+                OrderItemId=OrderItem1.Id,
                 EndRentTime = DateTime.Now.AddDays(15)
             };
             context.Orders.AddOrUpdate(Order1);
             context.SaveChanges();
-
         }
     }
 }

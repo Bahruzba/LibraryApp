@@ -20,7 +20,6 @@ namespace LibraryApp.Models
         [Required]
         public DateTime DateBirth { get; set; }
         public DateTime CreateAt { get; set; }
-
-        public List<Order> Orderds { get; set; }
+        public List<OrderItem> orderItems { get; set; }
     }
 }

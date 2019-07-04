@@ -90,5 +90,10 @@ namespace LibraryApp.Forms
                 }
             }
         }
+
+        private void LoginForm_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            Application.Exit();
+        }
     }
 }

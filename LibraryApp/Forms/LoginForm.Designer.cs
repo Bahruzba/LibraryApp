@@ -153,8 +153,11 @@
             this.Controls.Add(this.TxtUsername);
             this.Controls.Add(this.LblPassword);
             this.Controls.Add(this.LblUsername);
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "LoginForm";
             this.Text = "LoginForm";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.LoginForm_FormClosed);
             this.ResumeLayout(false);
             this.PerformLayout();
 

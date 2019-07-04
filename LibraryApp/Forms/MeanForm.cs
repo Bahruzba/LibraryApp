@@ -18,6 +18,12 @@ namespace LibraryApp.Forms
         private Book selectedBook;
         private Customer selectedCustomer;
         private Manager selectedManager;
+        private Customer selectedCustomerinOrder;
+        private Book selectedBookinOrder;
+        decimal ammountBook;
+        int countOrderBooks;
+
+
 
         public MeanForm()
         {
@@ -31,8 +37,6 @@ namespace LibraryApp.Forms
             LoginForm loginForm = new LoginForm();
             loginForm.Show();
         }
-
-
 
 
         #region Books
@@ -370,6 +374,48 @@ namespace LibraryApp.Forms
 
         #region Methots for Button's Placeholder
 
+        private void TxtSeacrhBookandCustomer_Enter(object sender, EventArgs e)
+        {
+            if (TxtSeacrhBookandCustomer.Text == "Müştəri axtar..."|| TxtSeacrhBookandCustomer.Text == "Kitab axtar...")
+            {
+                TxtSeacrhBookandCustomer.Text = "";
+                TxtSeacrhBookandCustomer.ForeColor = Color.Black;
+            }
+        }
+        private void TxtSeacrhBookandCustomer_Leave(object sender, EventArgs e)
+        {
+            if (TxtSeacrhBookandCustomer.Text == "")
+            {
+                TxtSeacrhBookandCustomer.ForeColor = Color.Silver;
+                if (CbbSearchBookandCustomer.SelectedIndex == 0)
+                {
+                    TxtSeacrhBookandCustomer.Text = "Müştəri axtar...";
+                } else if (CbbSearchBookandCustomer.SelectedIndex == 1)
+                {
+                    TxtSeacrhBookandCustomer.Text = "Kitab axtar...";
+                }
+            }
+        }
+
+        private void TxtCountOrderBook_Enter(object sender, EventArgs e)
+        {
+            if (TxtCountOrderBook.Text == "Sayı")
+            {
+                TxtCountOrderBook.Text = "";
+                TxtCountOrderBook.ForeColor = Color.Black;
+            }
+        }
+
+        private void TxtCountOrderBook_Leave(object sender, EventArgs e)
+        {
+            if (TxtCountOrderBook.Text == "")
+            {
+                TxtCountOrderBook.Text = "Sayı";
+                TxtCountOrderBook.ForeColor = Color.Silver;
+            }
+        }
+
+
         //Books Textboxs Placeholder
         private void TxtNameBook_Enter(object sender, EventArgs e)
         {
@@ -444,6 +490,7 @@ namespace LibraryApp.Forms
                 TxtCountBook.ForeColor = Color.Silver;
             }
         }
+
         private void TxtSearchBooks_Enter(object sender, EventArgs e)
         {
             CbbFilterBooks.SelectedIndex = 0;
@@ -711,16 +758,9 @@ namespace LibraryApp.Forms
                 List<Customer> Customers = context.Customers.Where(o=>o.Name.StartsWith(TxtSearchCustomers.Text)).ToList();
                 foreach (Customer customer in Customers)
                 {
-                    string status = "Passiv";
-                    List<Order> orders = context.Orders.Where(o => o.CustomerId == customer.Id).ToList();
-                    foreach (Order order in orders)
-                    {
-                        if (order.ReturnTime.ToString() == "")
-                        {
-                            status = "Aktiv";
-                        }
-                    }
-                    DgvCustomers.Rows.Add(customer.Id, customer.Name, customer.Surname, customer.PhoneNumber, customer.DateBirth.ToString("dd-MM-yyyy").Substring(0, 10), customer.CreateAt.ToString("dd-MM-yyyy").Substring(0, 10), status);
+                    List<OrderItem> OrderItems = context.OrderItems.Where(o => o.CustomerId == customer.Id).ToList();
+                    int BookCount = OrderItems.Count();
+                    DgvCustomers.Rows.Add(customer.Id, customer.Name, customer.Surname, customer.PhoneNumber, customer.DateBirth.ToString("dd-MM-yyyy").Substring(0, 10), customer.CreateAt.ToString("dd-MM-yyyy").Substring(0, 10), BookCount);
                 }
 
             }
@@ -729,16 +769,9 @@ namespace LibraryApp.Forms
                 List<Customer> Customers = context.Customers.Where(o => o.Surname.StartsWith(TxtSearchCustomers.Text)).ToList();
                 foreach (Customer customer in Customers)
                 {
-                    string status = "Passiv";
-                    List<Order> orders = context.Orders.Where(o => o.CustomerId == customer.Id).ToList();
-                    foreach (Order order in orders)
-                    {
-                        if (order.ReturnTime.ToString() == "")
-                        {
-                            status = "Aktiv";
-                        }
-                    }
-                    DgvCustomers.Rows.Add(customer.Id, customer.Name, customer.Surname, customer.PhoneNumber, customer.DateBirth.ToString("dd-MM-yyyy").Substring(0, 10), customer.CreateAt.ToString("dd-MM-yyyy").Substring(0, 10), status);
+                    List<OrderItem> OrderItems = context.OrderItems.Where(o => o.CustomerId == customer.Id).ToList();
+                    int BookCount = OrderItems.Count();
+                    DgvCustomers.Rows.Add(customer.Id, customer.Name, customer.Surname, customer.PhoneNumber, customer.DateBirth.ToString("dd-MM-yyyy").Substring(0, 10), customer.CreateAt.ToString("dd-MM-yyyy").Substring(0, 10), BookCount);
                 }
 
             }
@@ -747,16 +780,9 @@ namespace LibraryApp.Forms
                 List<Customer> Customers = context.Customers.OrderBy(o=>o.Name).ToList();
                 foreach (Customer customer in Customers)
                 {
-                    string status = "Passiv";
-                    List<Order> orders = context.Orders.Where(o => o.CustomerId == customer.Id).ToList();
-                    foreach (Order order in orders)
-                    {
-                        if (order.ReturnTime.ToString() == "")
-                        {
-                            status = "Aktiv";
-                        }
-                    }
-                    DgvCustomers.Rows.Add(customer.Id, customer.Name, customer.Surname, customer.PhoneNumber, customer.DateBirth.ToString("dd-MM-yyyy").Substring(0, 10), customer.CreateAt.ToString("dd-MM-yyyy").Substring(0, 10), status);
+                    List<OrderItem> OrderItems = context.OrderItems.Where(o => o.CustomerId == customer.Id).ToList();
+                    int BookCount = OrderItems.Count();
+                    DgvCustomers.Rows.Add(customer.Id, customer.Name, customer.Surname, customer.PhoneNumber, customer.DateBirth.ToString("dd-MM-yyyy").Substring(0, 10), customer.CreateAt.ToString("dd-MM-yyyy").Substring(0, 10), BookCount);
                 }
             }
             else if (CbbFilterCustomers.SelectedIndex == 1)
@@ -768,14 +794,9 @@ namespace LibraryApp.Forms
                 }
                 foreach (Customer customer in Customers)
                 {
-                    List<Order> orders = context.Orders.Where(o => o.CustomerId == customer.Id).ToList();
-                    foreach (Order order in orders)
-                    {
-                        if (order.ReturnTime.ToString() == "")
-                        {
-                            DgvCustomers.Rows.Add(customer.Id, customer.Name, customer.Surname, customer.PhoneNumber, customer.DateBirth.ToString("dd-MM-yyyy").Substring(0, 10), customer.CreateAt.ToString("dd-MM-yyyy").Substring(0, 10), "Aktiv");
-                        }
-                    }
+                    List<OrderItem> OrderItems = context.OrderItems.Where(o => o.CustomerId == customer.Id).ToList();
+                    int BookCount = OrderItems.Count();
+                    DgvCustomers.Rows.Add(customer.Id, customer.Name, customer.Surname, customer.PhoneNumber, customer.DateBirth.ToString("dd-MM-yyyy").Substring(0, 10), customer.CreateAt.ToString("dd-MM-yyyy").Substring(0, 10), BookCount);
                 }
             }
             else if (CbbFilterCustomers.SelectedIndex == 2)
@@ -787,20 +808,9 @@ namespace LibraryApp.Forms
                 }
                 foreach (Customer customer in Customers)
                 {
-                    Boolean a = true;
-                    List<Order> orders = context.Orders.Where(o => o.CustomerId == customer.Id).ToList();
-                    foreach (Order order in orders)
-                    {
-                        if (order.ReturnTime.ToString() == "")
-                        {
-                            a = false;
-                        }
-                    }
-                    if (a)
-                    {
-                        DgvCustomers.Rows.Add(customer.Id, customer.Name, customer.Surname, customer.PhoneNumber, customer.DateBirth.ToString("dd-MM-yyyy").Substring(0, 10), customer.CreateAt.ToString("dd-MM-yyyy").Substring(0, 10), "Passiv");
-                    }
-
+                    List<OrderItem> OrderItems = context.OrderItems.Where(o => o.CustomerId == customer.Id).ToList();
+                    int BookCount = OrderItems.Count();
+                    DgvCustomers.Rows.Add(customer.Id, customer.Name, customer.Surname, customer.PhoneNumber, customer.DateBirth.ToString("dd-MM-yyyy").Substring(0, 10), customer.CreateAt.ToString("dd-MM-yyyy").Substring(0, 10), BookCount);
                 }
             }
         }
@@ -1127,9 +1137,221 @@ namespace LibraryApp.Forms
 
         }
 
+        private void MeanForm_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            Application.Exit();
+        }
+
         private void MeanForm_Load(object sender, EventArgs e)
         {
             CbbSearchBookandCustomer.SelectedIndex = 0;
+            BtnOrders.BackColor = Color.FromArgb(250, 130, 0);
+            AllCustomerInOrders();
+            AllBookInOrders();
+            dateTimePicker1.Value = DateTime.Now;
+            dateTimePicker1.MinDate = DateTime.Now;
+            dateTimePicker1.MaxDate = DateTime.Now.AddMonths(2);
+        }
+
+        public void AllCustomerInOrders()
+        {
+            DgvCustomersInOrder.Rows.Clear();
+            List<Customer> customers = context.Customers.ToList();
+            if(TxtSeacrhBookandCustomer.Text!= "Müştəri axtar...")
+            {
+                customers = context.Customers.Where(c=>c.Name.StartsWith(TxtSeacrhBookandCustomer.Text)).ToList();
+            }
+            foreach (Customer customer in customers)
+            {
+                List<Order> orders = context.Orders.Where(o=>o.Id==customer.Id).ToList();
+                DgvCustomersInOrder.Rows.Add(customer.Id,customer.Name,customer.Surname,customer.PhoneNumber, orders.Count+" kitab");
+            }
+        }
+
+        public void AllBookInOrders()
+        {
+            DgvBooksInOrder.Rows.Clear();
+            List<Book> books = context.Books.ToList();
+            if (TxtSeacrhBookandCustomer.Text != "Kitab axtar...")
+            {
+                books = context.Books.Where(b => b.Name.StartsWith(TxtSeacrhBookandCustomer.Text)).ToList();
+            }
+            foreach (Book book in books)
+            {
+                ammountBook = 0;
+                countOrderBooks=0;
+                int countBook = book.Count;
+                    foreach (DataGridViewRow row in DgvSelectedBooks.Rows)
+                    {
+                    countOrderBooks += Convert.ToInt32(row.Cells[2].Value.ToString().Substring(0, row.Cells[2].Value.ToString().Length - 6));
+                    ammountBook += Convert.ToDecimal(row.Cells[3].Value.ToString().Substring(0, row.Cells[3].Value.ToString().Length - 3));
+                    LblTotalAmmount.Text = ammountBook+"  AZN";
+                    LblCountBook.Text = countOrderBooks+" kitab";
+                    if (PnlTotalOrder.Location.Y < 200)
+                    {
+                        PnlTotalOrder.Location = new Point(4, DgvSelectedBooks.Rows.Count * 40 + 40);
+                    }
+                    if (book.Id == Convert.ToInt32(row.Cells[0].Value))
+                        {
+                        countBook-=Convert.ToInt32(TxtCountOrderBook.Text);
+                        }
+                }
+                if (countBook > 0)
+                    {
+                        DgvBooksInOrder.Rows.Add(book.Id, book.Name, book.Writter, book.MonthlyPrice, countBook);
+                    }
+            }
+        }
+
+        public void OrderSystem()
+        {
+            if(CbbSearchBookandCustomer.SelectedIndex == 0)
+            {
+                TxtSeacrhBookandCustomer.Text = "Müştəri axtar...";
+                DgvCustomersInOrder.Visible = true;
+                DgvBooksInOrder.Visible = false;
+                PnlReturnTime.Visible = false;
+                AllCustomerInOrders();
+            }
+            else if(CbbSearchBookandCustomer.SelectedIndex == 1)
+            {
+                TxtSeacrhBookandCustomer.Text = "Kitab axtar...";
+                DgvCustomersInOrder.Visible = false;
+                DgvBooksInOrder.Visible = true;
+                PnlReturnTime.Visible = true;
+                AllBookInOrders();
+            }
+            TxtSeacrhBookandCustomer.ForeColor = Color.Silver;
+        }
+
+        private void TxtSeacrhBookandCustomer_TextChanged(object sender, EventArgs e)
+        {
+            AllCustomerInOrders();
+            AllBookInOrders();
+        }
+
+        private void CbbSearchBookandCustomer_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            OrderSystem();
+        }
+
+        private void DgvCustomersInOrder_RowHeaderMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            PnlSelectedCustomer.Visible = true;
+            selectedCustomerinOrder = context.Customers.Find(DgvCustomersInOrder.Rows[e.RowIndex].Cells[0].Value);
+            LblSelectedCustomer.Text = selectedCustomerinOrder.Name + " " + selectedCustomerinOrder.Surname;
+            CbbSearchBookandCustomer.SelectedIndex = 1;
+            BtnExitOrder.Visible = true;
+        }
+
+        private void DgvBooksInOrder_RowHeaderMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            LblUnderCountOrderBook.BackColor = Color.Orange;
+            LblUnderReturnBook.BackColor = Color.Orange;
+            if (TxtCountOrderBook.Text == "Sayı"&& dateTimePicker1.Value.ToString("dd-MM-yyyy") == DateTime.Now.ToString("dd-MM-yyyy"))
+            {
+                LblUnderCountOrderBook.BackColor = Color.Maroon;
+                LblUnderReturnBook.BackColor = Color.Maroon;
+                MessageBox.Show("Xanaları doldurun.");
+                return;
+            }
+            if (TxtCountOrderBook.Text == "Sayı")
+            {
+                LblUnderCountOrderBook.BackColor = Color.Maroon;
+                MessageBox.Show("Kitabın sayını yazın.");
+                return;
+                    
+            }
+            if (dateTimePicker1.Value.ToString("dd-MM-yyyy") == DateTime.Now.ToString("dd-MM-yyyy"))
+            {
+                LblUnderReturnBook.BackColor = Color.Maroon;
+                MessageBox.Show("Kitabın qaytarılma tarixini seçin.");
+                LblUnderCountOrderBook.BackColor = Color.Orange; ;
+                return;
+            }
+            selectedBookinOrder = context.Books.Find(DgvBooksInOrder.Rows[e.RowIndex].Cells[0].Value);
+            if(uint.TryParse(TxtCountOrderBook.Text, out uint a))
+            {
+                if (Convert.ToInt16(TxtCountOrderBook.Text) >Convert.ToInt32(DgvBooksInOrder.Rows[e.RowIndex].Cells[4].Value))
+                {
+                    LblUnderCountOrderBook.BackColor = Color.Maroon;
+                    MessageBox.Show("Bu kitabdan cəmi "+ DgvBooksInOrder.Rows[e.RowIndex].Cells[4].Value.ToString() + " ədəd qalıb.");
+                    return;
+                }
+                if (TxtCountOrderBook.Text == "0")
+                {
+                    LblUnderCountOrderBook.BackColor = Color.Maroon;
+                    MessageBox.Show("Düzgün dəyər daxil edin.");
+                    return;
+                }
+            }
+            else
+            {
+                LblUnderCountOrderBook.BackColor = Color.Maroon;
+                MessageBox.Show("Bu xanaya sadəcə rəqəm yaza bilərsiz.");
+                return;
+            }
+            DgvSelectedBooks.Rows.Add(selectedBookinOrder.Id, selectedBookinOrder.Name, TxtCountOrderBook.Text+" kitab", Math.Round(selectedBookinOrder.MonthlyPrice* Convert.ToInt32(TxtCountOrderBook.Text)*(Convert.ToInt32((dateTimePicker1.Value-DateTime.Now).ToString("dd"))+1)/30,2) + "  AZN", dateTimePicker1.Value.ToString("yyyy,MM,dd"));
+            PnlSelectedBooks.Visible = true;
+            AllBookInOrders();
+            TxtCountOrderBook.Text = "Sayı";
+
+            LblUnderReturnBook.BackColor = Color.Orange;
+            TxtCountOrderBook.ForeColor = Color.Silver;
+            BtnExitOrder.Visible = true;
+            dateTimePicker1.Value = DateTime.Now;
+            if (LblSelectedCustomer.Text != "")
+            {
+                BtnAddOrder.Visible = true;
+            }
+        }
+
+        public void ClearNewOrderForm()
+        {
+            CbbSearchBookandCustomer.SelectedIndex = 0;
+            DgvSelectedBooks.Rows.Clear();
+            PnlSelectedCustomer.Visible = false;
+            PnlSelectedBooks.Visible = false;
+            LblUnderReturnBook.BackColor = Color.Orange;
+            PnlTotalOrder.Location = new Point(5, 80);
+
+        }
+
+        private void BtnExitOrder_Click(object sender, EventArgs e)
+        {
+            ClearNewOrderForm();
+        }
+
+        private void BtnAddOrder_Click(object sender, EventArgs e)
+        {
+            BtnAddOrder.Visible = false;
+            BtnExitOrder.Visible = false;
+            OrderItem orderItem = new OrderItem
+            {
+                Created = DateTime.Now,
+                CustomerId = selectedCustomerinOrder.Id
+            };
+            context.OrderItems.Add(orderItem);
+            context.SaveChanges();
+            foreach (DataGridViewRow row in DgvSelectedBooks.Rows)
+            {
+                //context
+                string date = row.Cells[4].Value.ToString();
+                for (int j = 0; j < Convert.ToInt32(row.Cells[2].Value.ToString().Substring(0,1)); j++)
+                {
+                    Order order = new Order
+                    {
+                        OrderItemId=orderItem.Id,
+                        BookId = Convert.ToInt32(row.Cells[0].Value),
+                        EndRentTime = new DateTime(Convert.ToInt32(date.Substring(0, 4)), Convert.ToInt32(date.Substring(5, 2)), Convert.ToInt32(date.Substring(8, 2)))
+                    };
+                    context.Orders.Add(order);
+                    context.SaveChanges();
+                }
+            }
+            MessageBox.Show("Sifariş tamamlandı.");
+            ClearNewOrderForm();
+
         }
 
     }

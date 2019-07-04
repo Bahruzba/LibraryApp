@@ -70,27 +70,16 @@
     <Compile Include="Migrations\201906291037550_CreateStructure.Designer.cs">
       <DependentUpon>201906291037550_CreateStructure.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201907011608447_UpdateDatabaseStructur.cs" />
-    <Compile Include="Migrations\201907011608447_UpdateDatabaseStructur.Designer.cs">
-      <DependentUpon>201907011608447_UpdateDatabaseStructur.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201907012132037_UpdateCustomer.cs" />
-    <Compile Include="Migrations\201907012132037_UpdateCustomer.Designer.cs">
-      <DependentUpon>201907012132037_UpdateCustomer.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201907021031482_CorrectedBugCustomerTables.cs" />
-    <Compile Include="Migrations\201907021031482_CorrectedBugCustomerTables.Designer.cs">
-      <DependentUpon>201907021031482_CorrectedBugCustomerTables.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201907030921179_UpdateDataLengthColumns.cs" />
-    <Compile Include="Migrations\201907030921179_UpdateDataLengthColumns.Designer.cs">
-      <DependentUpon>201907030921179_UpdateDataLengthColumns.cs</DependentUpon>
+    <Compile Include="Migrations\201907041516099_UpdateTables.cs" />
+    <Compile Include="Migrations\201907041516099_UpdateTables.Designer.cs">
+      <DependentUpon>201907041516099_UpdateTables.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Book.cs" />
     <Compile Include="Models\Customer.cs" />
     <Compile Include="Models\Manager.cs" />
     <Compile Include="Models\Order.cs" />
+    <Compile Include="Models\OrderItim.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Forms\LoginForm.resx">
@@ -102,17 +91,8 @@
     <EmbeddedResource Include="Migrations\201906291037550_CreateStructure.resx">
       <DependentUpon>201906291037550_CreateStructure.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201907011608447_UpdateDatabaseStructur.resx">
-      <DependentUpon>201907011608447_UpdateDatabaseStructur.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201907012132037_UpdateCustomer.resx">
-      <DependentUpon>201907012132037_UpdateCustomer.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201907021031482_CorrectedBugCustomerTables.resx">
-      <DependentUpon>201907021031482_CorrectedBugCustomerTables.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201907030921179_UpdateDataLengthColumns.resx">
-      <DependentUpon>201907030921179_UpdateDataLengthColumns.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201907041516099_UpdateTables.resx">
+      <DependentUpon>201907041516099_UpdateTables.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
