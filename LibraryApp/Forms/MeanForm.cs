@@ -56,8 +56,7 @@ namespace LibraryApp.Forms
             PnlCustomers.Visible = false;
             PnlManagers.Visible = false;
             AllBooks();
-
-
+            ClearTexboxtBooks();
         }
         private void BtnAdd_Click(object sender, EventArgs e)
         {
@@ -90,32 +89,32 @@ namespace LibraryApp.Forms
                 List<Book> books = context.Books.Where(b => b.Name.StartsWith(TxtSearchBooks.Text)).ToList();
                 foreach(Book book in books)
                 {
-                    string status = "Kitabxanada";
-                    List<Order> orders = context.Orders.Where(o => o.BookId == book.Id).ToList();
-                    foreach (Order order in orders)
+                    int rentCount=0;
+                    List<OrderItem> orderItems = context.OrderItems.Where(o => o.BookId == book.Id).ToList();
+                    foreach (OrderItem orderItem in orderItems)
                     {
-                        if (order.ReturnTime.ToString() == "")
+                        if (orderItem.ReturnTime.ToString() == "")
                         {
-                            status = "İcarədə";
+                            rentCount++;
                         }
                     }
-                    DgvBooks.Rows.Add(book.Id, book.Name, book.Writter, book.MonthlyPrice, book.Count, status);
+                    DgvBooks.Rows.Add(book.Id, book.Name, book.Writter, book.MonthlyPrice, book.Count, book.Count-rentCount+" kitab", rentCount + " kitab");
                 }
             } else if (TxtSearchBooks.Text != "Axtarış edin..." && CbbSearchBooks.SelectedIndex == 1)
             {
                 List<Book> books = context.Books.Where(b => b.Writter.StartsWith(TxtSearchBooks.Text)).ToList();
                 foreach (Book book in books)
                 {
-                    string status = "Kitabxanada";
-                    List<Order> orders = context.Orders.Where(o => o.BookId == book.Id).ToList();
-                    foreach (Order order in orders)
+                    int rentCount = 0;
+                    List<OrderItem> orderItems = context.OrderItems.Where(o => o.BookId == book.Id).ToList();
+                    foreach (OrderItem orderItem in orderItems)
                     {
-                        if (order.ReturnTime.ToString() == "")
+                        if (orderItem.ReturnTime.ToString() == "")
                         {
-                            status = "İcarədə";
+                            rentCount++;
                         }
                     }
-                    DgvBooks.Rows.Add(book.Id, book.Name, book.Writter, book.MonthlyPrice, book.Count, status);
+                    DgvBooks.Rows.Add(book.Id, book.Name, book.Writter, book.MonthlyPrice, book.Count, book.Count - rentCount + " kitab", rentCount + " kitab");
                 }
             }
             else if (CbbFilterBooks.SelectedIndex == 0)
@@ -137,16 +136,16 @@ namespace LibraryApp.Forms
 
                 foreach (Book book in books)
                 {
-                    string status = "Kitabxanada";
-                    List<Order> orders = context.Orders.Where(o => o.BookId == book.Id).ToList();
-                    foreach (Order order in orders)
+                    int rentCount = 0;
+                    List<OrderItem> orderItems = context.OrderItems.Where(o => o.BookId == book.Id).ToList();
+                    foreach (OrderItem orderItem in orderItems)
                     {
-                        if (order.ReturnTime.ToString() == "")
+                        if (orderItem.ReturnTime.ToString() == "")
                         {
-                            status = "İcarədə";
+                            rentCount++;
                         }
                     }
-                    DgvBooks.Rows.Add(book.Id, book.Name, book.Writter, book.MonthlyPrice, book.Count, status);
+                    DgvBooks.Rows.Add(book.Id, book.Name, book.Writter, book.MonthlyPrice, book.Count, book.Count - rentCount + " kitab", rentCount + " kitab");
                 }
             }
             else if (CbbFilterBooks.SelectedIndex == 1)
@@ -167,18 +166,11 @@ namespace LibraryApp.Forms
 
                 foreach (Book book in books)
                 {
-                    string status = "Kitabxanada";
-                    List<Order> orders = context.Orders.Where(o => o.BookId == book.Id).ToList();
-                    foreach (Order order in orders)
+                    int rentCount = 0;
+                    List<OrderItem> orderItems = context.OrderItems.Where(o => o.BookId == book.Id && o.ReturnTime.ToString() == "").ToList();
+                    if (book.Count - orderItems.Count != 0)
                     {
-                        if (order.ReturnTime.ToString() == "")
-                        {
-                            status = "İcarədə";
-                        }
-                    }
-                    if (status == "Kitabxanada")
-                    {
-                        DgvBooks.Rows.Add(book.Id, book.Name, book.Writter, book.MonthlyPrice, book.Count, status);
+                        DgvBooks.Rows.Add(book.Id, book.Name, book.Writter, book.MonthlyPrice, book.Count, book.Count - orderItems.Count + " kitab", orderItems.Count + " kitab");
                     }
                 }
             }
@@ -200,15 +192,11 @@ namespace LibraryApp.Forms
 
                 foreach (Book book in books)
                 {
-                    string status = "Kitabxanada";
-                    List<Order> orders = context.Orders.Where(o => o.BookId == book.Id).ToList();
-                    foreach (Order order in orders)
+                    int rentCount = 0;
+                    List<OrderItem> orderItems = context.OrderItems.Where(o => o.BookId == book.Id && o.ReturnTime.ToString() == "").ToList();
+                    if (orderItems.Count > 0)
                     {
-                        if (order.ReturnTime.ToString() == "")
-                        {
-                            status = "İcarədə";
-                            DgvBooks.Rows.Add(book.Id, book.Name, book.Writter, book.MonthlyPrice, book.Count, status);
-                        }
+                        DgvBooks.Rows.Add(book.Id, book.Name, book.Writter, book.MonthlyPrice, book.Count, book.Count - orderItems.Count + " kitab", orderItems.Count + " kitab");
                     }
                 }
             }
@@ -412,6 +400,29 @@ namespace LibraryApp.Forms
             {
                 TxtCountOrderBook.Text = "Sayı";
                 TxtCountOrderBook.ForeColor = Color.Silver;
+            }
+        }
+
+        private void TxtSeacrhCustomerinRetornBook_Enter(object sender, EventArgs e)
+        {
+            if (TxtSearchBookAndCustomerinRetornBook.Text == "Müştəri axtar..."|| TxtSearchBookAndCustomerinRetornBook.Text == "Kitab axtar...")
+            {
+                TxtSearchBookAndCustomerinRetornBook.Text = "";
+            }
+        }
+
+        private void TxtSeacrhCustomerinRetornBook_Leave(object sender, EventArgs e)
+        {
+            if (TxtSearchBookAndCustomerinRetornBook.Text == "")
+            {
+                if (DgvCustomerinRetornBook.Visible == true)
+                {
+                TxtSearchBookAndCustomerinRetornBook.Text = "Müştəri axtar...";
+                }
+                else
+                {
+                    TxtSearchBookAndCustomerinRetornBook.Text = "Kitab axtar...";
+                }
             }
         }
 
@@ -687,6 +698,8 @@ namespace LibraryApp.Forms
             PnlBooks.Visible = false;
             PnlCustomers.Visible = true;
             PnlManagers.Visible = false;
+            AllCustomers();
+            ClearTextboxCustomer();
         }
 
         public Boolean ChechCustomerTextbox()
@@ -729,7 +742,13 @@ namespace LibraryApp.Forms
                 MessageBox.Show("Müştərinin doğum tarixini seçin.");
                 return false;
             }
-
+            List<Customer> customers = context.Customers.Where(c => c.PhoneNumber == TxtPhoneNumberCustomer.Text).ToList();
+            if (customers.Count > 0)
+            {
+                LblUnderDateBirthCutomer.BackColor = Color.Maroon;
+                MessageBox.Show("Bu telefon nömrəsi artıq qeydiyyatdan keçib");
+                return false;
+            }
             return true;
         }
 
@@ -758,9 +777,19 @@ namespace LibraryApp.Forms
                 List<Customer> Customers = context.Customers.Where(o=>o.Name.StartsWith(TxtSearchCustomers.Text)).ToList();
                 foreach (Customer customer in Customers)
                 {
-                    List<OrderItem> OrderItems = context.OrderItems.Where(o => o.CustomerId == customer.Id).ToList();
-                    int BookCount = OrderItems.Count();
-                    DgvCustomers.Rows.Add(customer.Id, customer.Name, customer.Surname, customer.PhoneNumber, customer.DateBirth.ToString("dd-MM-yyyy").Substring(0, 10), customer.CreateAt.ToString("dd-MM-yyyy").Substring(0, 10), BookCount);
+                    int BookCount = 0;
+                    List<Order> Orders = context.Orders.Include("OrderItems").Where(o => o.CustomerId == customer.Id).ToList();
+                        foreach(Order order in Orders)
+                            {
+                                foreach(OrderItem orderItem in order.OrderItems)
+                                {
+                                    if (orderItem.ReturnTime.ToString() == "")
+                                    {
+                                        BookCount++;
+                                    }
+                                }
+                            }
+                    DgvCustomers.Rows.Add(customer.Id, customer.Name, customer.Surname, customer.PhoneNumber, customer.DateBirth.ToString("dd-MM-yyyy").Substring(0, 10), customer.CreateAt.ToString("dd-MM-yyyy").Substring(0, 10), BookCount + " kitab");
                 }
 
             }
@@ -769,20 +798,44 @@ namespace LibraryApp.Forms
                 List<Customer> Customers = context.Customers.Where(o => o.Surname.StartsWith(TxtSearchCustomers.Text)).ToList();
                 foreach (Customer customer in Customers)
                 {
-                    List<OrderItem> OrderItems = context.OrderItems.Where(o => o.CustomerId == customer.Id).ToList();
-                    int BookCount = OrderItems.Count();
-                    DgvCustomers.Rows.Add(customer.Id, customer.Name, customer.Surname, customer.PhoneNumber, customer.DateBirth.ToString("dd-MM-yyyy").Substring(0, 10), customer.CreateAt.ToString("dd-MM-yyyy").Substring(0, 10), BookCount);
+                    int BookCount = 0;
+                    List<Order> Orders = context.Orders.Include("OrderItems").Where(o => o.CustomerId == customer.Id).ToList();
+                    foreach (Order order in Orders)
+                    {
+                        foreach (OrderItem orderItem in order.OrderItems)
+                        {
+                            if (orderItem.ReturnTime.ToString() == "")
+                            {
+                                BookCount++;
+                            }
+                        }
+                    }
+                    DgvCustomers.Rows.Add(customer.Id, customer.Name, customer.Surname, customer.PhoneNumber, customer.DateBirth.ToString("dd-MM-yyyy").Substring(0, 10), customer.CreateAt.ToString("dd-MM-yyyy").Substring(0, 10), BookCount + " kitab");
                 }
 
             }
             else if (CbbFilterCustomers.SelectedIndex == 0)
             {
-                List<Customer> Customers = context.Customers.OrderBy(o=>o.Name).ToList();
+                List<Customer> Customers = context.Customers.ToList();
+                if (CbbSortCustomers.SelectedIndex == 1)
+                {
+                    Customers = context.Customers.OrderBy(c => c.Name).ToList();
+                }
                 foreach (Customer customer in Customers)
                 {
-                    List<OrderItem> OrderItems = context.OrderItems.Where(o => o.CustomerId == customer.Id).ToList();
-                    int BookCount = OrderItems.Count();
-                    DgvCustomers.Rows.Add(customer.Id, customer.Name, customer.Surname, customer.PhoneNumber, customer.DateBirth.ToString("dd-MM-yyyy").Substring(0, 10), customer.CreateAt.ToString("dd-MM-yyyy").Substring(0, 10), BookCount);
+                    int BookCount = 0;
+                    List<Order> Orders = context.Orders.Include("OrderItems").Where(o => o.CustomerId == customer.Id).ToList();
+                    foreach (Order order in Orders)
+                    {
+                        foreach (OrderItem orderItem in order.OrderItems)
+                        {
+                            if (orderItem.ReturnTime.ToString() == "")
+                            {
+                                BookCount++;
+                            }
+                        }
+                    }
+                    DgvCustomers.Rows.Add(customer.Id, customer.Name, customer.Surname, customer.PhoneNumber, customer.DateBirth.ToString("dd-MM-yyyy").Substring(0, 10), customer.CreateAt.ToString("dd-MM-yyyy").Substring(0, 10), BookCount + " kitab");
                 }
             }
             else if (CbbFilterCustomers.SelectedIndex == 1)
@@ -794,9 +847,22 @@ namespace LibraryApp.Forms
                 }
                 foreach (Customer customer in Customers)
                 {
-                    List<OrderItem> OrderItems = context.OrderItems.Where(o => o.CustomerId == customer.Id).ToList();
-                    int BookCount = OrderItems.Count();
-                    DgvCustomers.Rows.Add(customer.Id, customer.Name, customer.Surname, customer.PhoneNumber, customer.DateBirth.ToString("dd-MM-yyyy").Substring(0, 10), customer.CreateAt.ToString("dd-MM-yyyy").Substring(0, 10), BookCount);
+                    int BookCount = 0;
+                    List<Order> Orders = context.Orders.Include("OrderItems").Where(o => o.CustomerId == customer.Id).ToList();
+                    foreach (Order order in Orders)
+                    {
+                        foreach (OrderItem orderItem in order.OrderItems)
+                        {
+                            if (orderItem.ReturnTime.ToString() == "")
+                            {
+                                BookCount++;
+                            }
+                        }
+                    }
+                    if (BookCount > 0)
+                    {
+                        DgvCustomers.Rows.Add(customer.Id, customer.Name, customer.Surname, customer.PhoneNumber, customer.DateBirth.ToString("dd-MM-yyyy").Substring(0, 10), customer.CreateAt.ToString("dd-MM-yyyy").Substring(0, 10), BookCount + " kitab");
+                    }
                 }
             }
             else if (CbbFilterCustomers.SelectedIndex == 2)
@@ -808,9 +874,22 @@ namespace LibraryApp.Forms
                 }
                 foreach (Customer customer in Customers)
                 {
-                    List<OrderItem> OrderItems = context.OrderItems.Where(o => o.CustomerId == customer.Id).ToList();
-                    int BookCount = OrderItems.Count();
-                    DgvCustomers.Rows.Add(customer.Id, customer.Name, customer.Surname, customer.PhoneNumber, customer.DateBirth.ToString("dd-MM-yyyy").Substring(0, 10), customer.CreateAt.ToString("dd-MM-yyyy").Substring(0, 10), BookCount);
+                    int BookCount = 0;
+                    List<Order> Orders = context.Orders.Include("OrderItems").Where(o => o.CustomerId == customer.Id).ToList();
+                    foreach (Order order in Orders)
+                    {
+                        foreach (OrderItem orderItem in order.OrderItems)
+                        {
+                            if (orderItem.ReturnTime.ToString() == "")
+                            {
+                                BookCount++;
+                            }
+                        }
+                    }
+                    if (BookCount == 0)
+                    {
+                        DgvCustomers.Rows.Add(customer.Id, customer.Name, customer.Surname, customer.PhoneNumber, customer.DateBirth.ToString("dd-MM-yyyy").Substring(0, 10), customer.CreateAt.ToString("dd-MM-yyyy").Substring(0, 10), BookCount + " kitab");
+                    }
                 }
             }
         }
@@ -939,6 +1018,7 @@ namespace LibraryApp.Forms
             PnlManagers.Visible = true;
 
             AllManagers();
+            ClearTextboxManager();
         }
 
         public void AllManagers()
@@ -1135,6 +1215,8 @@ namespace LibraryApp.Forms
             PnlCustomers.Visible = false;
             PnlManagers.Visible = false;
 
+            ClearNewOrderForm();
+
         }
 
         private void MeanForm_FormClosed(object sender, FormClosedEventArgs e)
@@ -1153,6 +1235,7 @@ namespace LibraryApp.Forms
             dateTimePicker1.MaxDate = DateTime.Now.AddMonths(2);
         }
 
+        #region New Order
         public void AllCustomerInOrders()
         {
             DgvCustomersInOrder.Rows.Clear();
@@ -1163,8 +1246,19 @@ namespace LibraryApp.Forms
             }
             foreach (Customer customer in customers)
             {
-                List<Order> orders = context.Orders.Where(o=>o.Id==customer.Id).ToList();
-                DgvCustomersInOrder.Rows.Add(customer.Id,customer.Name,customer.Surname,customer.PhoneNumber, orders.Count+" kitab");
+                int count = 0;
+                List<Order> orders = context.Orders.Include("OrderItems").Where(o=>o.CustomerId==customer.Id).ToList();
+                foreach(Order order in orders)
+                    { 
+                    foreach(OrderItem orderItem in order.OrderItems)
+                        {
+                        if (orderItem.ReturnTime.ToString() == "")
+                        {
+                            count++;
+                        }
+                        }
+                    } 
+                DgvCustomersInOrder.Rows.Add(customer.Id,customer.Name,customer.Surname,customer.PhoneNumber, count+" kitab");
             }
         }
 
@@ -1178,9 +1272,10 @@ namespace LibraryApp.Forms
             }
             foreach (Book book in books)
             {
+                List<OrderItem> orderItems = context.OrderItems.Where(o => o.BookId == book.Id&&o.ReturnTime.ToString()=="").ToList();
                 ammountBook = 0;
                 countOrderBooks=0;
-                int countBook = book.Count;
+                int countBook = book.Count- orderItems.Count;
                     foreach (DataGridViewRow row in DgvSelectedBooks.Rows)
                     {
                     countOrderBooks += Convert.ToInt32(row.Cells[2].Value.ToString().Substring(0, row.Cells[2].Value.ToString().Length - 6));
@@ -1312,8 +1407,12 @@ namespace LibraryApp.Forms
             DgvSelectedBooks.Rows.Clear();
             PnlSelectedCustomer.Visible = false;
             PnlSelectedBooks.Visible = false;
+            BtnAddOrder.Visible = false;
+            BtnExitOrder.Visible = false;
             LblUnderReturnBook.BackColor = Color.Orange;
             PnlTotalOrder.Location = new Point(5, 80);
+
+            OrderSystem();
 
         }
 
@@ -1326,26 +1425,26 @@ namespace LibraryApp.Forms
         {
             BtnAddOrder.Visible = false;
             BtnExitOrder.Visible = false;
-            OrderItem orderItem = new OrderItem
+            Order order = new Order
             {
                 Created = DateTime.Now,
                 CustomerId = selectedCustomerinOrder.Id
             };
-            context.OrderItems.Add(orderItem);
+            context.Orders.Add(order);
             context.SaveChanges();
             foreach (DataGridViewRow row in DgvSelectedBooks.Rows)
             {
-                //context
+                
                 string date = row.Cells[4].Value.ToString();
                 for (int j = 0; j < Convert.ToInt32(row.Cells[2].Value.ToString().Substring(0,1)); j++)
                 {
-                    Order order = new Order
+                    OrderItem orderItem= new OrderItem
                     {
-                        OrderItemId=orderItem.Id,
+                        OrderId=order.Id,
                         BookId = Convert.ToInt32(row.Cells[0].Value),
                         EndRentTime = new DateTime(Convert.ToInt32(date.Substring(0, 4)), Convert.ToInt32(date.Substring(5, 2)), Convert.ToInt32(date.Substring(8, 2)))
                     };
-                    context.Orders.Add(order);
+                    context.OrderItems.Add(orderItem);
                     context.SaveChanges();
                 }
             }
@@ -1354,5 +1453,146 @@ namespace LibraryApp.Forms
 
         }
 
+        #endregion
+
+
+        public void AllCustomerInReturn()
+        {
+            DgvCustomerinRetornBook.Rows.Clear();
+            List<Customer> customers = context.Customers.ToList();
+            if (TxtSearchBookAndCustomerinRetornBook.Text != "Müştəri axtar...")
+            {
+                customers = context.Customers.Where(c => c.Name.StartsWith(TxtSearchBookAndCustomerinRetornBook.Text)).ToList();
+            }
+            foreach (Customer customer in customers)
+            {
+                int count = 0;
+                List<Order> orders = context.Orders.Include("OrderItems").Where(o => o.CustomerId == customer.Id).ToList();
+                foreach (Order order in orders)
+                {
+                    foreach (OrderItem orderItem in order.OrderItems)
+                    {
+                        if (orderItem.ReturnTime.ToString() == "")
+                        {
+                            count++;
+                        }
+                    }
+                }
+                if (count > 0)
+                {
+                DgvCustomerinRetornBook.Rows.Add(customer.Id, customer.Name, customer.Surname, customer.PhoneNumber, count + " kitab");
+                }
+            }
+        }
+
+        public void AllBookInRetorn()
+        {
+            DgvBooksInOrder.Rows.Clear();
+            List<Book> books = context.Books.ToList();
+            if (TxtSearchBookAndCustomerinRetornBook.Text != "Kitab axtar..."|| TxtSearchBookAndCustomerinRetornBook.Text != "Müştəri axtar...")
+            {
+                books = context.Books.Where(b => b.Name.StartsWith(TxtSearchBookAndCustomerinRetornBook.Text)).ToList();
+            }
+            foreach (Book book in books)
+            {
+                List<OrderItem> orderItems = context.OrderItems.Where(o => o.BookId == book.Id && o.ReturnTime.ToString() == ""&&o.BookId==book.Id).ToList();
+                //DgvBookInRetorn.Rows.Add();
+                MessageBox.Show(orderItems.Count.ToString());
+
+            }
+        }
+
+        private void TabOrders_MouseClick(object sender, MouseEventArgs e)
+        {
+            AllCustomerInReturn();
+            ClearNewOrderForm();
+        }
+
+        private void DgvCustomerinRetornBook_RowHeaderMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            DgvCustomerinRetornBook.Visible = false;
+            DgvBookInRetorn.Visible = true;
+            TxtSearchBookAndCustomerinRetornBook.Text = "Kitab axtar...";
+        }
+
+        private void TxtSearchCustomerinRetornBook_TextChanged(object sender, EventArgs e)
+        {
+            AllCustomerInReturn();
+        }
+
     }
 }
+
+
+
+
+
+
+//namespace LibraryApp.Migrations
+//{
+//    using LibraryApp.Models;
+//    using System;
+//    using System.Data.Entity;
+//    using System.Data.Entity.Migrations;
+//    using System.Linq;
+
+//    internal sealed class Configuration : DbMigrationsConfiguration<LibraryApp.DAL.LibraryAppContext>
+//    {
+//        public Configuration()
+//        {
+//            AutomaticMigrationsEnabled = false;
+//        }
+
+//        protected override void Seed(LibraryApp.DAL.LibraryAppContext context)
+//        {
+//            Customer Customer1 = new Customer
+//            {
+//                Name = "Hikmət",
+//                Surname = "Şəmistanlı",
+//                PhoneNumber = "0503886876",
+//                DateBirth = new DateTime(1995, 12, 24),
+//                CreateAt = DateTime.Now
+//            };
+//            context.Customers.AddOrUpdate(Customer1);
+//            context.SaveChanges();
+
+
+//            Book Book1 = new Book
+//            {
+//                Name = "Riyaziyyat",
+//                Writter = "Agasəf Məmmədli",
+//                MonthlyPrice = 5,
+//                Count = 3,
+//            };
+//            context.Books.AddOrUpdate(Book1);
+//            context.SaveChanges();
+
+//            Manager Manager1 = new Manager
+//            {
+//                Name = "Əhmədov",
+//                Surname = "Bəhruz",
+//                Username = "Ehmedovbehruz1995@mail.ru",
+//                Password = "Bahruz1995"
+//            };
+//            context.Managers.AddOrUpdate(Manager1);
+//            context.SaveChanges();
+
+//            Order Order1 = new Order
+//            {
+//                Created = DateTime.Now,
+//                CustomerId = Customer1.Id
+//            };
+//            context.Orders.AddOrUpdate(Order1);
+//            context.SaveChanges();
+
+//            OrderItem OrderItem1 = new OrderItem
+//            {
+//                BookId = Book1.Id,
+//                OrderId = Order1.Id,
+//                EndRentTime = DateTime.Now.AddDays(15)
+//            };
+//            context.Orders.AddOrUpdate(Order1);
+//            context.SaveChanges();
+//        }
+//    }
+//}

@@ -7,13 +7,13 @@ namespace LibraryApp.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.2.0-61023")]
-    public sealed partial class CreateStructure : IMigrationMetadata
+    public sealed partial class CreateStructurDatabase : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(CreateStructure));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(CreateStructurDatabase));
         
         string IMigrationMetadata.Id
         {
-            get { return "201906291037550_CreateStructure"; }
+            get { return "201907041931077_CreateStructurDatabase"; }
         }
         
         string IMigrationMetadata.Source

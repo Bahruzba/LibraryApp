@@ -30,7 +30,7 @@
             Book Book1 = new Book
             {
                 Name = "Riyaziyyat",
-                Writter="Agasəf Məmmədli",
+                Writter = "Agasəf Məmmədli",
                 MonthlyPrice = 5,
                 Count = 3,
             };
@@ -47,18 +47,18 @@
             context.Managers.AddOrUpdate(Manager1);
             context.SaveChanges();
 
-            OrderItem OrderItem1 = new OrderItem
+            Order Order1 = new Order
             {
                 Created = DateTime.Now,
                 CustomerId = Customer1.Id
             };
-            context.OrderItems.AddOrUpdate(OrderItem1);
+            context.Orders.AddOrUpdate(Order1);
             context.SaveChanges();
 
-            Order Order1 = new Order 
+            OrderItem OrderItem1 = new OrderItem
             {
                 BookId = Book1.Id,
-                OrderItemId=OrderItem1.Id,
+                OrderId = Order1.Id,
                 EndRentTime = DateTime.Now.AddDays(15)
             };
             context.Orders.AddOrUpdate(Order1);

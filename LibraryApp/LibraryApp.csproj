@@ -66,20 +66,16 @@
     <Compile Include="Forms\MeanForm.Designer.cs">
       <DependentUpon>MeanForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201906291037550_CreateStructure.cs" />
-    <Compile Include="Migrations\201906291037550_CreateStructure.Designer.cs">
-      <DependentUpon>201906291037550_CreateStructure.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201907041516099_UpdateTables.cs" />
-    <Compile Include="Migrations\201907041516099_UpdateTables.Designer.cs">
-      <DependentUpon>201907041516099_UpdateTables.cs</DependentUpon>
+    <Compile Include="Migrations\201907041931077_CreateStructurDatabase.cs" />
+    <Compile Include="Migrations\201907041931077_CreateStructurDatabase.Designer.cs">
+      <DependentUpon>201907041931077_CreateStructurDatabase.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Book.cs" />
     <Compile Include="Models\Customer.cs" />
     <Compile Include="Models\Manager.cs" />
+    <Compile Include="Models\OrderItem.cs" />
     <Compile Include="Models\Order.cs" />
-    <Compile Include="Models\OrderItim.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Forms\LoginForm.resx">
@@ -88,11 +84,8 @@
     <EmbeddedResource Include="Forms\MeanForm.resx">
       <DependentUpon>MeanForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201906291037550_CreateStructure.resx">
-      <DependentUpon>201906291037550_CreateStructure.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201907041516099_UpdateTables.resx">
-      <DependentUpon>201907041516099_UpdateTables.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201907041931077_CreateStructurDatabase.resx">
+      <DependentUpon>201907041931077_CreateStructurDatabase.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
