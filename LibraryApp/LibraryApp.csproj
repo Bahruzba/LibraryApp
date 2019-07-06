@@ -70,6 +70,18 @@
     <Compile Include="Migrations\201907041931077_CreateStructurDatabase.Designer.cs">
       <DependentUpon>201907041931077_CreateStructurDatabase.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201907051926108_UpdateOrderItemTable.cs" />
+    <Compile Include="Migrations\201907051926108_UpdateOrderItemTable.Designer.cs">
+      <DependentUpon>201907051926108_UpdateOrderItemTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201907061237215_updateDatabaseCustomerItem.cs" />
+    <Compile Include="Migrations\201907061237215_updateDatabaseCustomerItem.Designer.cs">
+      <DependentUpon>201907061237215_updateDatabaseCustomerItem.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201907061341468_UpdateDatabaseBookitem.cs" />
+    <Compile Include="Migrations\201907061341468_UpdateDatabaseBookitem.Designer.cs">
+      <DependentUpon>201907061341468_UpdateDatabaseBookitem.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Book.cs" />
     <Compile Include="Models\Customer.cs" />
@@ -86,6 +98,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201907041931077_CreateStructurDatabase.resx">
       <DependentUpon>201907041931077_CreateStructurDatabase.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201907051926108_UpdateOrderItemTable.resx">
+      <DependentUpon>201907051926108_UpdateOrderItemTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201907061237215_updateDatabaseCustomerItem.resx">
+      <DependentUpon>201907061237215_updateDatabaseCustomerItem.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201907061341468_UpdateDatabaseBookitem.resx">
+      <DependentUpon>201907061341468_UpdateDatabaseBookitem.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

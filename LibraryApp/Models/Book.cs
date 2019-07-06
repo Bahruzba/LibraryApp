@@ -19,6 +19,6 @@ namespace LibraryApp.Models
         public decimal MonthlyPrice { get; set; }
         [Required]
         public int Count { get; set; }
-        public List<Order> Orders { get; set; }
+        public List<OrderItem> OrderItems { get; set; }
     }
 }
