@@ -1652,17 +1652,18 @@ namespace LibraryApp.Forms
                         {
                             if (CbbForTimeReturnBook.SelectedIndex == 0)
                             {
+
                                 DgvViewBooksinrent.Rows.Add(book.Id, book.Name, book.Writter, book.MonthlyPrice + "  AZN         ", order.Created.ToString("dd-MM-yyyy"), orderItem.EndRentTime.ToString("dd-MM-yyyy"), Math.Round(Convert.ToDecimal(orderItem.EndRentTime.Subtract(order.Created).TotalDays) * Math.Round(book.MonthlyPrice / 30, 2), 2) + "  AZN", Math.Round(Convert.ToDecimal(DateTime.Now.Subtract(order.Created).TotalDays) * Math.Round(book.MonthlyPrice / 30, 2), 2) + "  AZN");
                             }
-                            else if (CbbForTimeReturnBook.SelectedIndex == 1 && orderItem.EndRentTime.Subtract(DateTime.Now).TotalDays == 0)
+                            else if (CbbForTimeReturnBook.SelectedIndex == 1 && Math.Round(orderItem.EndRentTime.Subtract(DateTime.Now).TotalDays) ==1)
                             {
                                 DgvViewBooksinrent.Rows.Add(book.Id, book.Name, book.Writter, book.MonthlyPrice + "  AZN         ", order.Created.ToString("dd-MM-yyyy"), orderItem.EndRentTime.ToString("dd-MM-yyyy"), Math.Round(Convert.ToDecimal(orderItem.EndRentTime.Subtract(order.Created).TotalDays) * Math.Round(book.MonthlyPrice / 30, 2), 2) + "  AZN", Math.Round(Convert.ToDecimal(DateTime.Now.Subtract(order.Created).TotalDays) * Math.Round(book.MonthlyPrice / 30, 2), 2) + "  AZN");
                             }
-                            else if (CbbForTimeReturnBook.SelectedIndex == 2 && orderItem.EndRentTime.Subtract(DateTime.Now).TotalDays == 1)
+                            else if (CbbForTimeReturnBook.SelectedIndex == 2 && Math.Round(orderItem.EndRentTime.Subtract(DateTime.Now).TotalDays) == 0)
                             {
                                 DgvViewBooksinrent.Rows.Add(book.Id, book.Name, book.Writter, book.MonthlyPrice + "  AZN         ", order.Created.ToString("dd-MM-yyyy"), orderItem.EndRentTime.ToString("dd-MM-yyyy"), Math.Round(Convert.ToDecimal(orderItem.EndRentTime.Subtract(order.Created).TotalDays) * Math.Round(book.MonthlyPrice / 30, 2), 2) + "  AZN", Math.Round(Convert.ToDecimal(DateTime.Now.Subtract(order.Created).TotalDays) * Math.Round(book.MonthlyPrice / 30, 2), 2) + "  AZN");
                             }
-                            else if (CbbForTimeReturnBook.SelectedIndex == 3 && orderItem.EndRentTime.Subtract(DateTime.Now).TotalDays < 0)
+                            else if (CbbForTimeReturnBook.SelectedIndex == 3 && Math.Round(orderItem.EndRentTime.Subtract(DateTime.Now).TotalDays) < 0)
                             {
                                 DgvViewBooksinrent.Rows.Add(book.Id, book.Name, book.Writter, book.MonthlyPrice + "  AZN         ", order.Created.ToString("dd-MM-yyyy"), orderItem.EndRentTime.ToString("dd-MM-yyyy"), Math.Round(Convert.ToDecimal(orderItem.EndRentTime.Subtract(order.Created).TotalDays) * Math.Round(book.MonthlyPrice / 30, 2), 2) + "  AZN", Math.Round(Convert.ToDecimal(DateTime.Now.Subtract(order.Created).TotalDays) * Math.Round(book.MonthlyPrice / 30, 2), 2) + "  AZN");
                             }
