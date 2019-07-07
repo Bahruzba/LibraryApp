@@ -1,11 +1,19 @@
 C:\Users\Baxruz\source\repos\LibraryApp\LibraryApp\bin\Debug\LibraryApp.exe.config
 C:\Users\Baxruz\source\repos\LibraryApp\LibraryApp\bin\Debug\LibraryApp.exe
 C:\Users\Baxruz\source\repos\LibraryApp\LibraryApp\bin\Debug\LibraryApp.pdb
+C:\Users\Baxruz\source\repos\LibraryApp\LibraryApp\bin\Debug\ClosedXML.dll
+C:\Users\Baxruz\source\repos\LibraryApp\LibraryApp\bin\Debug\DocumentFormat.OpenXml.dll
 C:\Users\Baxruz\source\repos\LibraryApp\LibraryApp\bin\Debug\EntityFramework.dll
 C:\Users\Baxruz\source\repos\LibraryApp\LibraryApp\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\Baxruz\source\repos\LibraryApp\LibraryApp\bin\Debug\ExcelNumberFormat.dll
+C:\Users\Baxruz\source\repos\LibraryApp\LibraryApp\bin\Debug\FastMember.dll
+C:\Users\Baxruz\source\repos\LibraryApp\LibraryApp\bin\Debug\System.IO.Packaging.dll
+C:\Users\Baxruz\source\repos\LibraryApp\LibraryApp\bin\Debug\ClosedXML.pdb
+C:\Users\Baxruz\source\repos\LibraryApp\LibraryApp\bin\Debug\ClosedXML.xml
+C:\Users\Baxruz\source\repos\LibraryApp\LibraryApp\bin\Debug\DocumentFormat.OpenXml.xml
 C:\Users\Baxruz\source\repos\LibraryApp\LibraryApp\bin\Debug\EntityFramework.xml
 C:\Users\Baxruz\source\repos\LibraryApp\LibraryApp\bin\Debug\EntityFramework.SqlServer.xml
-C:\Users\Baxruz\source\repos\LibraryApp\LibraryApp\obj\Debug\LibraryApp.csprojAssemblyReference.cache
+C:\Users\Baxruz\source\repos\LibraryApp\LibraryApp\bin\Debug\ExcelNumberFormat.xml
 C:\Users\Baxruz\source\repos\LibraryApp\LibraryApp\obj\Debug\LibraryApp.Forms.LoginForm.resources
 C:\Users\Baxruz\source\repos\LibraryApp\LibraryApp\obj\Debug\LibraryApp.Forms.MeanForm.resources
 C:\Users\Baxruz\source\repos\LibraryApp\LibraryApp\obj\Debug\LibraryApp.Migrations.CreateStructurDatabase.resources
@@ -18,3 +26,4 @@ C:\Users\Baxruz\source\repos\LibraryApp\LibraryApp\obj\Debug\LibraryApp.csproj.C
 C:\Users\Baxruz\source\repos\LibraryApp\LibraryApp\obj\Debug\LibraryApp.csproj.CopyComplete
 C:\Users\Baxruz\source\repos\LibraryApp\LibraryApp\obj\Debug\LibraryApp.exe
 C:\Users\Baxruz\source\repos\LibraryApp\LibraryApp\obj\Debug\LibraryApp.pdb
+C:\Users\Baxruz\source\repos\LibraryApp\LibraryApp\obj\Debug\LibraryApp.csprojAssemblyReference.cache

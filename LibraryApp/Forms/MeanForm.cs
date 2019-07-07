@@ -9,6 +9,8 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using LibraryApp.Models;
 using LibraryApp.DAL;
+using ClosedXML.Excel;
+using System.IO;
 
 namespace LibraryApp.Forms
 {
@@ -38,6 +40,42 @@ namespace LibraryApp.Forms
             LoginForm loginForm = new LoginForm();
             loginForm.Show();
         }
+
+
+        private void BtnOrders_Click(object sender, EventArgs e)
+        {
+            BtnOrders.BackColor = Color.FromArgb(250, 130, 0);
+            BtnBooks.BackColor = Color.FromArgb(230, 100, 0);
+            BtnCustomers.BackColor = Color.FromArgb(230, 100, 0);
+            BtnManagers.BackColor = Color.FromArgb(230, 100, 0);
+
+            TabOrders.Visible = true;
+            PnlOrders.Visible = true;
+            PnlBooks.Visible = false;
+            PnlCustomers.Visible = false;
+            PnlManagers.Visible = false;
+            PnlReport.Visible = false;
+
+            ClearNewOrderForm();
+
+        }
+
+        private void MeanForm_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            Application.Exit();
+        }
+
+        private void MeanForm_Load(object sender, EventArgs e)
+        {
+            CbbSearchBookandCustomer.SelectedIndex = 0;
+            BtnOrders.BackColor = Color.FromArgb(250, 130, 0);
+            AllCustomerInOrders();
+            AllBookInOrders();
+            dateTimePicker1.Value = DateTime.Now;
+            dateTimePicker1.MinDate = DateTime.Now;
+            dateTimePicker1.MaxDate = DateTime.Now.AddMonths(2);
+        }
+
 
 
         #region Books
@@ -1014,6 +1052,7 @@ namespace LibraryApp.Forms
             PnlBooks.Visible = false;
             PnlCustomers.Visible = false;
             PnlManagers.Visible = true;
+            PnlReport.Visible = false;
 
             AllManagers();
             ClearTextboxManager();
@@ -1204,38 +1243,6 @@ namespace LibraryApp.Forms
 
         #endregion
 
-
-        private void BtnOrders_Click(object sender, EventArgs e)
-        {
-            BtnOrders.BackColor = Color.FromArgb(250, 130, 0);
-            BtnBooks.BackColor = Color.FromArgb(230, 100, 0);
-            BtnCustomers.BackColor = Color.FromArgb(230, 100, 0);
-            BtnManagers.BackColor = Color.FromArgb(230, 100, 0);
-
-            PnlOrders.Visible = true;
-            PnlBooks.Visible = false;
-            PnlCustomers.Visible = false;
-            PnlManagers.Visible = false;
-
-            ClearNewOrderForm();
-
-        }
-
-        private void MeanForm_FormClosed(object sender, FormClosedEventArgs e)
-        {
-            Application.Exit();
-        }
-
-        private void MeanForm_Load(object sender, EventArgs e)
-        {
-            CbbSearchBookandCustomer.SelectedIndex = 0;
-            BtnOrders.BackColor = Color.FromArgb(250, 130, 0);
-            AllCustomerInOrders();
-            AllBookInOrders();
-            dateTimePicker1.Value = DateTime.Now;
-            dateTimePicker1.MinDate = DateTime.Now;
-            dateTimePicker1.MaxDate = DateTime.Now.AddMonths(2);
-        }
 
         #region New Order
         public void AllCustomerInOrders()
@@ -1439,6 +1446,53 @@ namespace LibraryApp.Forms
             ClearNewOrderForm();
         }
 
+        private void BtnNextİnOrder_Click(object sender, EventArgs e)
+        {
+            CbbSearchBookandCustomer.SelectedIndex = 1;
+            BtnExitOrder.Visible = true;
+            if (PnlReturnTime.Visible == true)
+            {
+                DgvSelectedBooks.Rows.Add(selectedBookinOrder.Id, selectedBookinOrder.Name, TxtCountOrderBook.Text + " kitab", Math.Round(selectedBookinOrder.MonthlyPrice * Convert.ToInt32(TxtCountOrderBook.Text) * (Convert.ToInt32((dateTimePicker1.Value - DateTime.Now).ToString("dd")) + 1) / 30, 2) + "  AZN", dateTimePicker1.Value.ToString("yyyy,MM,dd"));
+                PnlSelectedBooks.Visible = true;
+                AllBookInOrders();
+                TxtCountOrderBook.Text = "Sayı";
+
+                LblUnderReturnBook.BackColor = Color.Orange;
+                TxtCountOrderBook.ForeColor = Color.Silver;
+                BtnExitOrder.Visible = true;
+                dateTimePicker1.Value = DateTime.Now;
+                if (LblSelectedCustomer.Text != "")
+                {
+                    BtnAddOrder.Visible = true;
+                }
+            }
+            BtnNextİnOrder.Visible = false;
+
+        }
+
+        private void DgvBooksInOrder_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex == -1)
+            {
+                return;
+            }
+            if (DgvBooksInOrder.Rows[e.RowIndex].DefaultCellStyle.ForeColor == Color.Empty)
+            {
+                DgvBooksInOrder.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.FromArgb(250, 130, 0);
+                DgvBooksInOrder.Rows[e.RowIndex].DefaultCellStyle.ForeColor = Color.White;
+            }
+            foreach (DataGridViewRow row in DgvBooksInOrder.Rows)
+            {
+                if (row.Index != e.RowIndex)
+                {
+                    row.DefaultCellStyle.BackColor = Color.White;
+                    row.DefaultCellStyle.ForeColor = Color.Empty;
+                }
+            }
+            BtnAddOrderBook.Visible = true;
+            PnlReturnTime.Visible = true;
+        }
+
         private void BtnAddOrder_Click(object sender, EventArgs e)
         {
             BtnAddOrder.Visible = false;
@@ -1632,7 +1686,7 @@ namespace LibraryApp.Forms
 
         #endregion
 
-
+        #region ViewAllBooksInRent
         public void ViewBooksInRent()
         {
             DgvViewBooksinrent.Rows.Clear();
@@ -1682,53 +1736,6 @@ namespace LibraryApp.Forms
         private void CbbForTimeReturnBook_SelectedIndexChanged(object sender, EventArgs e)
         {
             ViewBooksInRent();
-        }
-
-        private void BtnNextİnOrder_Click(object sender, EventArgs e)
-        {
-            CbbSearchBookandCustomer.SelectedIndex = 1;
-            BtnExitOrder.Visible = true;
-            if (PnlReturnTime.Visible == true)
-            {
-                DgvSelectedBooks.Rows.Add(selectedBookinOrder.Id, selectedBookinOrder.Name, TxtCountOrderBook.Text + " kitab", Math.Round(selectedBookinOrder.MonthlyPrice * Convert.ToInt32(TxtCountOrderBook.Text) * (Convert.ToInt32((dateTimePicker1.Value - DateTime.Now).ToString("dd")) + 1) / 30, 2) + "  AZN", dateTimePicker1.Value.ToString("yyyy,MM,dd"));
-                PnlSelectedBooks.Visible = true;
-                AllBookInOrders();
-                TxtCountOrderBook.Text = "Sayı";
-
-                LblUnderReturnBook.BackColor = Color.Orange;
-                TxtCountOrderBook.ForeColor = Color.Silver;
-                BtnExitOrder.Visible = true;
-                dateTimePicker1.Value = DateTime.Now;
-                if (LblSelectedCustomer.Text != "")
-                {
-                    BtnAddOrder.Visible = true;
-                }
-            }
-            BtnNextİnOrder.Visible = false;
-
-        }
-
-        private void DgvBooksInOrder_CellClick(object sender, DataGridViewCellEventArgs e)
-        {
-            if (e.RowIndex == -1)
-            {
-                return;
-            }
-            if (DgvBooksInOrder.Rows[e.RowIndex].DefaultCellStyle.ForeColor == Color.Empty)
-            {
-                DgvBooksInOrder.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.FromArgb(250, 130, 0);
-                DgvBooksInOrder.Rows[e.RowIndex].DefaultCellStyle.ForeColor = Color.White;
-            }
-            foreach (DataGridViewRow row in DgvBooksInOrder.Rows)
-            {
-                if (row.Index != e.RowIndex)
-                {
-                    row.DefaultCellStyle.BackColor = Color.White;
-                    row.DefaultCellStyle.ForeColor = Color.Empty;
-                }
-            }
-            BtnAddOrderBook.Visible = true;
-            PnlReturnTime.Visible = true;
         }
 
         private void DgvCustomerinRetornBook_CellClick(object sender, DataGridViewCellEventArgs e)
@@ -1852,6 +1859,135 @@ namespace LibraryApp.Forms
                 BtnAddOrderBook.BackColor = Color.FromArgb(255, 130, 0);
             }
 
+        }
+
+        #endregion
+
+        public void ReportToDgv()
+        {
+            List<Customer> customers = context.Customers.ToList();
+            foreach (Customer customer in customers)
+            {
+                List<Order> orders = context.Orders.Include("OrderItems").Where(o => o.Created >= DtpStart.Value && o.Created <= DtpEnd.Value && o.CustomerId == customer.Id).ToList();
+                foreach (Order order in orders)
+                {
+                    foreach (OrderItem orderItem in order.OrderItems)
+                    {
+                        List<Book> books = context.Books.Where(b => b.Id == orderItem.BookId).ToList();
+                        foreach (Book book in books)
+                        {
+                            string returntimebook = "-";
+                            if (orderItem.ReturnTime.ToString()!= "")
+                            {
+                                returntimebook = orderItem.ReturnTime.Value.Day.ToString()+"-"+ orderItem.ReturnTime.Value.Month.ToString()+"-"+ orderItem.ReturnTime.Value.Year.ToString();
+                            }
+
+                            DgvReport.Rows.Add(customer.Name, customer.Surname, customer.PhoneNumber, customer.CreateAt.ToString("dd-MM-yyyy"), customer.DateBirth.ToString("dd-MM-yyyy"), book.Name, order.Created.ToString("dd-MM-yyyy"), orderItem.EndRentTime.ToString("dd-MM-yyyy"), returntimebook, orderItem.Price);
+                        }
+                    }
+                }
+            }
+
+        }
+
+        public void Report()
+       {
+            int a = 1;
+            var workbook = new XLWorkbook();
+            var worksheet = workbook.Worksheets.Add("Sheet");
+            List<Customer> customers = context.Customers.ToList();
+
+            worksheet.Cell("A" + a).Value = "Adı";
+            worksheet.Cell("B" + a).Value = "Soyadı";
+            worksheet.Cell("C" + a).Value = "Telefon nömrəsi";
+            worksheet.Cell("D" + a).Value = "Qeydiyyat tarixi";
+            worksheet.Cell("E" + a).Value = "Doğum tarixi";
+            worksheet.Cell("F" + a).Value = "Götürdüyü kitab";
+            worksheet.Cell("G" + a).Value = "Götürdüyü tarix";
+            worksheet.Cell("H" + a).Value = "Qaytarmalı olduğu tarix";
+            worksheet.Cell("I" + a).Value = "Real qaytardığı tarix";
+            worksheet.Cell("J" + a).Value = "Ödəniş";
+
+            foreach (Customer customer in customers)
+            {
+                List<Order> orders = context.Orders.Include("OrderItems").Where(o => o.Created >= DtpStart.Value && o.Created <= DtpEnd.Value&&o.CustomerId==customer.Id).ToList();
+                foreach(Order order in orders)
+                {
+                    foreach(OrderItem orderItem in order.OrderItems)
+                    {
+                        List<Book> books = context.Books.Where(b=>b.Id==orderItem.BookId).ToList();
+                        foreach(Book book in books)
+                        {
+
+                            a++;
+                            worksheet.Cell("A" + a).Value = customer.Name;
+                            worksheet.Cell("B" + a).Value = customer.Surname;
+                            worksheet.Cell("C" + a).Value = customer.PhoneNumber;
+                            worksheet.Cell("D" + a).Value = customer.CreateAt;
+                            worksheet.Cell("E" + a).Value = customer.DateBirth;
+                            worksheet.Cell("F" + a).Value = book.Name;
+                            worksheet.Cell("G" + a).Value = order.Created;
+                            worksheet.Cell("H" + a).Value = orderItem.EndRentTime;
+                            worksheet.Cell("I" + a).Value = orderItem.ReturnTime;
+                            worksheet.Cell("J" + a).Value = orderItem.Price;
+                        }
+                    }
+                }
+            } 
+            SfdReport.FileName = "Hesabat";
+            DialogResult r= SfdReport.ShowDialog();
+            if (r == DialogResult.OK)
+            {
+                string path = SfdReport.FileName;
+                int x = 0;
+                while (File.Exists(path))
+                {
+                    path = SfdReport.FileName;
+                    x++;
+                    path += x;
+
+                }
+                workbook.SaveAs(path+".xlsx");
+
+
+            }
+        }
+
+        private void Button4_Click(object sender, EventArgs e)
+        {
+            TabOrders.Visible = false;
+            PnlOrders.Visible = false;
+            PnlBooks.Visible = false;
+            PnlCustomers.Visible = false;
+            PnlManagers.Visible = false;
+            PnlReport.Visible = true;
+            ReportToDgv();
+        }
+
+        private void DtpEnd_ValueChanged(object sender, EventArgs e)
+        {
+            BtnShowReport.Text = "Axtar";
+            DgvReport.Rows.Clear();
+        }
+
+        private void BtnShowReport_Click(object sender, EventArgs e)
+        {
+            if (BtnShowReport.Text == "Axtar")
+            {
+                ReportToDgv();
+                if (DgvReport.Rows.Count > 0)
+                {
+                    BtnShowReport.Text = "Report";
+                }
+
+
+            }else if (BtnShowReport.Text == "Report")
+            {
+                Report();
+                MessageBox.Show("Yaddaşa yazıldı.");
+                DgvReport.Rows.Clear();
+                BtnShowReport.Text = "Axtar";
+            }
         }
     }
 }
