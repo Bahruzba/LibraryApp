@@ -2052,6 +2052,14 @@ namespace LibraryApp.Forms
         {
             BtnShowReport.Text = "Axtar";
             DgvReport.Rows.Clear();
+            if (DtpEnd.Value > DateTime.Now)
+            {
+                DtpEnd.Value = DateTime.Now;
+            }
+            if (DtpEnd.Value < DtpStart.Value)
+            {
+                DtpStart.Value = DtpEnd.Value;
+            }
         }
 
         private void BtnShowReport_Click(object sender, EventArgs e)

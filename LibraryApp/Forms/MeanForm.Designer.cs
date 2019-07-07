@@ -2570,7 +2570,7 @@ namespace LibraryApp.Forms
             this.Column32.HeaderText = "Müştərinin adı:";
             this.Column32.MinimumWidth = 6;
             this.Column32.Name = "Column32";
-            this.Column32.Width = 168;
+            this.Column32.Width = 154;
             // 
             // Column33
             // 
