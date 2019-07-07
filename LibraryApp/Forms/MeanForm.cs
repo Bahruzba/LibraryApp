@@ -48,6 +48,8 @@ namespace LibraryApp.Forms
             BtnBooks.BackColor = Color.FromArgb(230, 100, 0);
             BtnCustomers.BackColor = Color.FromArgb(230, 100, 0);
             BtnManagers.BackColor = Color.FromArgb(230, 100, 0);
+            BtnReport.BackColor = Color.FromArgb(230, 100, 0);
+
 
             TabOrders.Visible = true;
             PnlOrders.Visible = true;
@@ -85,6 +87,8 @@ namespace LibraryApp.Forms
             BtnBooks.BackColor = Color.FromArgb(250, 130, 0);
             BtnCustomers.BackColor = Color.FromArgb(230, 100, 0);
             BtnManagers.BackColor = Color.FromArgb(230, 100, 0);
+            BtnReport.BackColor = Color.FromArgb(230, 100, 0);
+
 
             CbbFilterBooks.SelectedIndex = 0;
             CbbSortBooks.SelectedIndex = 1;
@@ -256,6 +260,49 @@ namespace LibraryApp.Forms
 
         }
 
+        private void DgvBooks_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex == -1)
+            {
+                return;
+            }
+            if (DgvBooks.Rows[e.RowIndex].DefaultCellStyle.ForeColor == Color.Empty)
+            {
+                DgvBooks.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.FromArgb(250, 130, 0);
+                DgvBooks.Rows[e.RowIndex].DefaultCellStyle.ForeColor = Color.White;
+            }
+            foreach (DataGridViewRow row in DgvBooks.Rows)
+            {
+                if (row.Index != e.RowIndex)
+                {
+                    row.DefaultCellStyle.BackColor = Color.White;
+                    row.DefaultCellStyle.ForeColor = Color.Empty;
+                }
+            }
+
+            LblUnderlineNameBook.BackColor = Color.Orange;
+            LblUnderlineWritterBook.BackColor = Color.Orange;
+            LblUnderlinePriceBook.BackColor = Color.Orange;
+            LblUnderlineCountBook.BackColor = Color.Orange;
+
+            int IdBook = Convert.ToInt32(DgvBooks.Rows[e.RowIndex].Cells[0].Value);
+            selectedBook = context.Books.Find(IdBook);
+            TxtNameBook.Text = selectedBook.Name;
+            TxtWritterBook.Text = selectedBook.Writter;
+            TxtPriceBook.Text = selectedBook.MonthlyPrice.ToString();
+            TxtCountBook.Text = selectedBook.Count.ToString();
+
+            TxtNameBook.ForeColor = Color.Black;
+            TxtWritterBook.ForeColor = Color.Black;
+            TxtPriceBook.ForeColor = Color.Black;
+            TxtCountBook.ForeColor = Color.Black;
+
+            BtnAddBook.Visible = false;
+            BtnDeleteBook.Visible = true;
+            BtnUpdateBook.Visible = true;
+
+        }
+
         public Boolean ChechTxtboxsBooks()
         {
             if (TxtNameBook.Text == "Kitabın adı" || TxtWritterBook.Text == "Yazarı" || TxtPriceBook.Text == "Qiyməti" || TxtCountBook.Text == "Sayı" || !decimal.TryParse(TxtPriceBook.Text, out decimal a) || !int.TryParse(TxtCountBook.Text, out int b))
@@ -327,30 +374,6 @@ namespace LibraryApp.Forms
             LblUnderlineWritterBook.BackColor = Color.Orange;
             LblUnderlinePriceBook.BackColor = Color.Orange;
             LblUnderlineCountBook.BackColor = Color.Orange;
-        }
-
-        private void DgvBooks_RowHeaderMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
-        {
-            LblUnderlineNameBook.BackColor = Color.Orange;
-            LblUnderlineWritterBook.BackColor = Color.Orange;
-            LblUnderlinePriceBook.BackColor = Color.Orange;
-            LblUnderlineCountBook.BackColor = Color.Orange;
-
-            int IdBook = Convert.ToInt32(DgvBooks.Rows[e.RowIndex].Cells[0].Value);
-            selectedBook = context.Books.Find(IdBook);
-            TxtNameBook.Text = selectedBook.Name;
-            TxtWritterBook.Text = selectedBook.Writter;
-            TxtPriceBook.Text = selectedBook.MonthlyPrice.ToString();
-            TxtCountBook.Text = selectedBook.Count.ToString();
-
-            TxtNameBook.ForeColor = Color.Black;
-            TxtWritterBook.ForeColor = Color.Black;
-            TxtPriceBook.ForeColor = Color.Black;
-            TxtCountBook.ForeColor = Color.Black;
-
-            BtnAddBook.Visible = false;
-            BtnDeleteBook.Visible = true;
-            BtnUpdateBook.Visible = true;
         }
 
         private void BtnUpdate_Click(object sender, EventArgs e)
@@ -725,6 +748,8 @@ namespace LibraryApp.Forms
             BtnBooks.BackColor = Color.FromArgb(230, 100, 0);
             BtnCustomers.BackColor = Color.FromArgb(250, 130, 0);
             BtnManagers.BackColor = Color.FromArgb(230, 100, 0);
+            BtnReport.BackColor = Color.FromArgb(230, 100, 0);
+
 
             CbbFilterCustomers.SelectedIndex = 0;
             CbbSortCustomers.SelectedIndex = 0;
@@ -764,7 +789,7 @@ namespace LibraryApp.Forms
                 MessageBox.Show("Xanaları tam doldurun.");
                 return false;
             }
-            else if (TxtPhoneNumberCustomer.Text.Length != 10 || !uint.TryParse(TxtPhoneNumberCustomer.Text, out uint a))
+            else if (TxtPhoneNumberCustomer.Text.Length != 10 || !uint.TryParse(TxtPhoneNumberCustomer.Text, out uint a)|| TxtPhoneNumberCustomer.Text.StartsWith("00"))
             {
                 MessageBox.Show("Telefon nömrəsini düzgün şəkildə qeyd edin. Meselen: 0501234567");
                 LblUnderPhoneNumberCustomer.BackColor = Color.Maroon;
@@ -938,6 +963,49 @@ namespace LibraryApp.Forms
             CbbSearchCustomers.SelectedIndex = 0;
         }
 
+        private void DgvCustomers_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex == -1)
+            {
+                return;
+            }
+            if (DgvCustomers.Rows[e.RowIndex].DefaultCellStyle.ForeColor == Color.Empty)
+            {
+                DgvCustomers.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.FromArgb(250, 130, 0);
+                DgvCustomers.Rows[e.RowIndex].DefaultCellStyle.ForeColor = Color.White;
+            }
+            foreach (DataGridViewRow row in DgvCustomers.Rows)
+            {
+                if (row.Index != e.RowIndex)
+                {
+                    row.DefaultCellStyle.BackColor = Color.White;
+                    row.DefaultCellStyle.ForeColor = Color.Empty;
+                }
+            }
+
+            LblUnderNameCustomer.BackColor = Color.Orange;
+            LblUnderSurnameCustomer.BackColor = Color.Orange;
+            LblUnderPhoneNumberCustomer.BackColor = Color.Orange;
+            LblUnderDateBirthCutomer.BackColor = Color.Orange;
+
+            int IdCustomer = Convert.ToInt32(DgvCustomers.Rows[e.RowIndex].Cells[0].Value);
+            selectedCustomer = context.Customers.Find(IdCustomer);
+
+            TxtNameCustomer.Text = selectedCustomer.Name;
+            TxtSurnameCustomer.Text = selectedCustomer.Surname;
+            TxtPhoneNumberCustomer.Text = selectedCustomer.PhoneNumber;
+            DtpDateBirth.Value = selectedCustomer.DateBirth;
+
+            TxtNameCustomer.ForeColor = Color.Black;
+            TxtSurnameCustomer.ForeColor = Color.Black;
+            TxtPhoneNumberCustomer.ForeColor = Color.Black;
+
+            BtnAddCustomer.Visible = false;
+            BtnUpdateCustomer.Visible = true;
+            BtnDeleteCustomer.Visible = true;
+
+        }
+
         private void TxtSearchCustomers_TextChanged(object sender, EventArgs e)
         {
             AllCustomers();
@@ -968,30 +1036,6 @@ namespace LibraryApp.Forms
             AllCustomers();
             MessageBox.Show("Müştəri əlavə olundu");
             ClearTextboxCustomer();
-        }
-
-        private void DgvCustomers_RowHeaderMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
-        {
-            LblUnderNameCustomer.BackColor = Color.Orange;
-            LblUnderSurnameCustomer.BackColor = Color.Orange;
-            LblUnderPhoneNumberCustomer.BackColor = Color.Orange;
-            LblUnderDateBirthCutomer.BackColor = Color.Orange;
-
-            int IdCustomer = Convert.ToInt32(DgvCustomers.Rows[e.RowIndex].Cells[0].Value);
-            selectedCustomer = context.Customers.Find(IdCustomer);
-
-            TxtNameCustomer.Text = selectedCustomer.Name;
-            TxtSurnameCustomer.Text = selectedCustomer.Surname;
-            TxtPhoneNumberCustomer.Text = selectedCustomer.PhoneNumber;
-            DtpDateBirth.Value = selectedCustomer.DateBirth;
-
-            TxtNameCustomer.ForeColor = Color.Black;
-            TxtSurnameCustomer.ForeColor = Color.Black;
-            TxtPhoneNumberCustomer.ForeColor = Color.Black;
-
-            BtnAddCustomer.Visible = false;
-            BtnUpdateCustomer.Visible = true;
-            BtnDeleteCustomer.Visible = true;
         }
 
         private void BtnUpdateCustomer_Click(object sender, EventArgs e)
@@ -1047,6 +1091,8 @@ namespace LibraryApp.Forms
             BtnBooks.BackColor = Color.FromArgb(230, 100, 0);
             BtnCustomers.BackColor = Color.FromArgb(230, 100, 0);
             BtnManagers.BackColor = Color.FromArgb(250, 130, 0);
+            BtnReport.BackColor = Color.FromArgb(230, 100, 0);
+
 
             PnlOrders.Visible = false;
             PnlBooks.Visible = false;
@@ -1153,6 +1199,48 @@ namespace LibraryApp.Forms
             LblUnderPasswordManager.BackColor = Color.Orange;
         }
 
+        private void DgvManagers_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex == -1)
+            {
+                return;
+            }
+            if (DgvManagers.Rows[e.RowIndex].DefaultCellStyle.ForeColor == Color.Empty)
+            {
+                DgvManagers.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.FromArgb(250, 130, 0);
+                DgvManagers.Rows[e.RowIndex].DefaultCellStyle.ForeColor = Color.White;
+            }
+            foreach (DataGridViewRow row in DgvManagers.Rows)
+            {
+                if (row.Index != e.RowIndex)
+                {
+                    row.DefaultCellStyle.BackColor = Color.White;
+                    row.DefaultCellStyle.ForeColor = Color.Empty;
+                }
+            }
+
+            LblUnderNameManager.BackColor = Color.Orange;
+            LblUnderSurnameManager.BackColor = Color.Orange;
+            LblUnderUsernameManager.BackColor = Color.Orange;
+            LblUnderPasswordManager.BackColor = Color.Orange;
+
+            BtnAddManager.Visible = false;
+            BtnUpdateManager.Visible = true;
+            BtnDeleteManager.Visible = true;
+
+            int IdManager = Convert.ToInt32(DgvManagers.Rows[e.RowIndex].Cells[0].Value);
+            selectedManager = context.Managers.Find(IdManager);
+            TxtNameManager.Text = selectedManager.Name;
+            TxtSurnameManager.Text = selectedManager.Surname;
+            TxtUsernameManager.Text = selectedManager.Username;
+            TxtPasswordManager.Text = selectedManager.Password;
+
+            TxtNameManager.ForeColor = Color.Black;
+            TxtSurnameManager.ForeColor = Color.Black;
+            TxtUsernameManager.ForeColor = Color.Black;
+            TxtPasswordManager.ForeColor = Color.Black;
+        }
+
         private void BtnAddManager_Click(object sender, EventArgs e)
         {
             if (!CheckManagerTextbox())
@@ -1174,30 +1262,6 @@ namespace LibraryApp.Forms
             ClearTextboxManager();
             AllManagers();
 
-        }
-
-        private void DgvManagers_RowHeaderMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
-        {
-            LblUnderNameManager.BackColor = Color.Orange;
-            LblUnderSurnameManager.BackColor = Color.Orange;
-            LblUnderUsernameManager.BackColor = Color.Orange;
-            LblUnderPasswordManager.BackColor = Color.Orange;
-
-            BtnAddManager.Visible = false;
-            BtnUpdateManager.Visible = true;
-            BtnDeleteManager.Visible = true;
-
-            int IdManager = Convert.ToInt32(DgvManagers.Rows[e.RowIndex].Cells[0].Value);
-            selectedManager = context.Managers.Find(IdManager);
-            TxtNameManager.Text = selectedManager.Name;
-            TxtSurnameManager.Text = selectedManager.Surname;
-            TxtUsernameManager.Text = selectedManager.Username;
-            TxtPasswordManager.Text = selectedManager.Password;
-
-            TxtNameManager.ForeColor = Color.Black;
-            TxtSurnameManager.ForeColor = Color.Black;
-            TxtUsernameManager.ForeColor = Color.Black;
-            TxtPasswordManager.ForeColor = Color.Black;
         }
 
         private void BtnUpdateManager_Click(object sender, EventArgs e)
@@ -1339,6 +1403,10 @@ namespace LibraryApp.Forms
 
         private void DgvCustomersInOrder_CellClick(object sender, DataGridViewCellEventArgs e)
         {
+            if (e.RowIndex == -1)
+            {
+                return;
+            }
             BtnNextİnOrder.Visible = true;
             PnlSelectedCustomer.Visible = true;
             selectedCustomerinOrder = context.Customers.Find(DgvCustomersInOrder.Rows[e.RowIndex].Cells[0].Value);
@@ -1573,7 +1641,7 @@ namespace LibraryApp.Forms
                     if (orderItem.ReturnTime.ToString() == "")
                     {
                         Book book = context.Books.Find(orderItem.BookId);
-                        decimal price = Math.Round(Convert.ToDecimal(DateTime.Now.Subtract(orderItem.EndRentTime).TotalDays) * Math.Round(book.MonthlyPrice / 30, 2), 2);
+                        decimal price = Math.Round(Convert.ToDecimal(DateTime.Now.Subtract(orderItem.EndRentTime).TotalDays) * Math.Round(book.MonthlyPrice*5/1000 / 30, 5), 2);
                         if (orderItem.EndRentTime > DateTime.Now)
                         {
                             price = 0;
@@ -1635,7 +1703,6 @@ namespace LibraryApp.Forms
             {
                 ammount+=Convert.ToDecimal(DgvBookInRetorn.Rows[id].Cells[7].Value);
             }
-            MessageBox.Show(ammount+"");
             LblAmmountInRetorn.Text = ammount.ToString("#.##") + "  AZN";
         }
 
@@ -1665,6 +1732,8 @@ namespace LibraryApp.Forms
             AllBookInRetorn();
             ReturnBook.Clear();
             BtnReturnBook.Visible = false;
+            LblbookcountinReturn.Visible = false;
+            LblAmmountInRetorn.Visible = false;
         }
 
         public void ClearTxtReturnForm()
@@ -1676,6 +1745,8 @@ namespace LibraryApp.Forms
             DgvBookInRetorn.Visible = false;
             DgvCustomerinRetornBook.Visible = true;
             PnlSearchBookAndCustomerreturn.Visible = true;
+            LblAmmountInRetorn.Visible = false;
+            LblbookcountinReturn.Visible = false;
 
         }
         private void BtnExitInReturn_Click(object sender, EventArgs e)
@@ -1740,6 +1811,10 @@ namespace LibraryApp.Forms
 
         private void DgvCustomerinRetornBook_CellClick(object sender, DataGridViewCellEventArgs e)
         {
+            if (e.RowIndex == -1)
+            {
+                return;
+            }
             selectedCustomerIdinReturn = Convert.ToInt32(DgvCustomerinRetornBook.Rows[e.RowIndex].Cells[0].Value);
             LblCustumerNameInRetrn.Text = DgvCustomerinRetornBook.Rows[e.RowIndex].Cells[2].Value.ToString() + " " + DgvCustomerinRetornBook.Rows[e.RowIndex].Cells[1].Value.ToString();
 
@@ -1756,6 +1831,8 @@ namespace LibraryApp.Forms
         {
             if (BtnAddOrderBook.BackColor == Color.LightGray)
             {
+                LblUnderReturnBook.BackColor=Color.Maroon;
+                LblUnderCountOrderBook.BackColor = Color.Maroon;
                 MessageBox.Show("Xanaları doldurun.");
                 return;
             }
@@ -1863,6 +1940,7 @@ namespace LibraryApp.Forms
 
         #endregion
 
+        #region Report
         public void ReportToDgv()
         {
             List<Customer> customers = context.Customers.ToList();
@@ -1955,6 +2033,12 @@ namespace LibraryApp.Forms
 
         private void Button4_Click(object sender, EventArgs e)
         {
+            BtnOrders.BackColor = Color.FromArgb(230, 100, 0);
+            BtnBooks.BackColor = Color.FromArgb(230, 100, 0);
+            BtnCustomers.BackColor = Color.FromArgb(230, 100, 0);
+            BtnManagers.BackColor = Color.FromArgb(230, 100, 0);
+            BtnReport.BackColor = Color.FromArgb(250, 130, 0);
+
             TabOrders.Visible = false;
             PnlOrders.Visible = false;
             PnlBooks.Visible = false;
@@ -1979,8 +2063,6 @@ namespace LibraryApp.Forms
                 {
                     BtnShowReport.Text = "Report";
                 }
-
-
             }else if (BtnShowReport.Text == "Report")
             {
                 Report();
@@ -1989,5 +2071,7 @@ namespace LibraryApp.Forms
                 BtnShowReport.Text = "Axtar";
             }
         }
+        #endregion
+
     }
 }

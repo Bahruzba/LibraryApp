@@ -31,13 +31,13 @@ namespace LibraryApp.Forms
                 if (TxtUsername.Text == "")
                 {
                     LblUnderUsername.BackColor = Color.Maroon;
-                    return;
                 }
                 if (TxtPassword.Text == "")
                 {
                     LblUnderPassword.BackColor = Color.Maroon;
                 }
                     MessageBox.Show("Xanaları doldurun.");
+                    return;
             }
             else if (!TxtUsername.Text.Contains("@"))
             {

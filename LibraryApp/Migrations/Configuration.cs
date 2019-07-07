@@ -29,9 +29,9 @@
 
             Book Book1 = new Book
             {
-                Name = "Riyaziyyat",
-                Writter = "Agasəf Məmmədli",
-                MonthlyPrice = 5,
+                Name = "Dedektiv",
+                Writter = "Çingiz Musatafayev",
+                MonthlyPrice = 35,
                 Count = 3,
             };
             context.Books.AddOrUpdate(Book1);
@@ -39,10 +39,10 @@
 
             Manager Manager1 = new Manager
             {
-                Name = "Əhmədov",
-                Surname = "Bəhruz",
-                Username = "Ehmedovbehruz1995@mail.ru",
-                Password = "Bahruz1995"
+                Name = "Yolçu",
+                Surname = "Nəsib",
+                Username = "yolchu@code.edu.az",
+                Password = "Bahruza100bal"
             };
             context.Managers.AddOrUpdate(Manager1);
             context.SaveChanges();

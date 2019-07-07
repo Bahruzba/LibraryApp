@@ -103,6 +103,10 @@
     <Compile Include="Migrations\201907061341468_UpdateDatabaseBookitem.Designer.cs">
       <DependentUpon>201907061341468_UpdateDatabaseBookitem.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201907071715559_UpdateSeed.cs" />
+    <Compile Include="Migrations\201907071715559_UpdateSeed.Designer.cs">
+      <DependentUpon>201907071715559_UpdateSeed.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Book.cs" />
     <Compile Include="Models\Customer.cs" />
@@ -128,6 +132,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201907061341468_UpdateDatabaseBookitem.resx">
       <DependentUpon>201907061341468_UpdateDatabaseBookitem.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201907071715559_UpdateSeed.resx">
+      <DependentUpon>201907071715559_UpdateSeed.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
