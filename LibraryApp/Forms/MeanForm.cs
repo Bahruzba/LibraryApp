@@ -252,8 +252,6 @@ namespace LibraryApp.Forms
             AllBooks();
         }
 
-<<<<<<< HEAD
-=======
         private void CbbSearchBooks_SelectedIndexChanged(object sender, EventArgs e)
         {
             AllBooks();
@@ -305,7 +303,6 @@ namespace LibraryApp.Forms
 
         }
 
->>>>>>> 09e7dea1dd983e4c651893a507f599af85d416b1
         public Boolean ChechTxtboxsBooks()
         {
             if (TxtNameBook.Text == "Kitabın adı" || TxtWritterBook.Text == "Yazarı" || TxtPriceBook.Text == "Qiyməti" || TxtCountBook.Text == "Sayı" || !decimal.TryParse(TxtPriceBook.Text, out decimal a) || !int.TryParse(TxtCountBook.Text, out int b))
@@ -379,60 +376,6 @@ namespace LibraryApp.Forms
             LblUnderlineCountBook.BackColor = Color.Orange;
         }
 
-<<<<<<< HEAD
-        private void CbbSearchBooks_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            AllBooks();
-            CbbFilterBooks.SelectedIndex = 0;
-            CbbSortBooks.SelectedIndex = 0;
-
-        }
-
-        private void DgvBooks_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
-        {
-            if (e.RowIndex == -1)
-            {
-                return;
-            }
-            if (DgvBooks.Rows[e.RowIndex].DefaultCellStyle.ForeColor == Color.Empty)
-            {
-                DgvBooks.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.FromArgb(250, 130, 0);
-                DgvBooks.Rows[e.RowIndex].DefaultCellStyle.ForeColor = Color.White;
-            }
-            foreach (DataGridViewRow row in DgvBooks.Rows)
-            {
-                if (row.Index != e.RowIndex)
-                {
-                    row.DefaultCellStyle.BackColor = Color.White;
-                    row.DefaultCellStyle.ForeColor = Color.Empty;
-                }
-            }
-
-            LblUnderlineNameBook.BackColor = Color.Orange;
-            LblUnderlineWritterBook.BackColor = Color.Orange;
-            LblUnderlinePriceBook.BackColor = Color.Orange;
-            LblUnderlineCountBook.BackColor = Color.Orange;
-
-            int IdBook = Convert.ToInt32(DgvBooks.Rows[e.RowIndex].Cells[0].Value);
-            selectedBook = context.Books.Find(IdBook);
-            TxtNameBook.Text = selectedBook.Name;
-            TxtWritterBook.Text = selectedBook.Writter;
-            TxtPriceBook.Text = selectedBook.MonthlyPrice.ToString();
-            TxtCountBook.Text = selectedBook.Count.ToString();
-
-            TxtNameBook.ForeColor = Color.Black;
-            TxtWritterBook.ForeColor = Color.Black;
-            TxtPriceBook.ForeColor = Color.Black;
-            TxtCountBook.ForeColor = Color.Black;
-
-            BtnAddBook.Visible = false;
-            BtnDeleteBook.Visible = true;
-            BtnUpdateBook.Visible = true;
-
-        }
-
-=======
->>>>>>> 09e7dea1dd983e4c651893a507f599af85d416b1
         private void BtnUpdate_Click(object sender, EventArgs e)
         {
             if (!ChechTxtboxsBooks())
@@ -846,7 +789,7 @@ namespace LibraryApp.Forms
                 MessageBox.Show("Xanaları tam doldurun.");
                 return false;
             }
-            else if (TxtPhoneNumberCustomer.Text.Length != 10 || !uint.TryParse(TxtPhoneNumberCustomer.Text, out uint a)|| TxtPhoneNumberCustomer.Text.StartsWith("00"))
+            else if (TxtPhoneNumberCustomer.Text.Length != 10 || !uint.TryParse(TxtPhoneNumberCustomer.Text, out uint a) || TxtPhoneNumberCustomer.Text.StartsWith("00"))
             {
                 MessageBox.Show("Telefon nömrəsini düzgün şəkildə qeyd edin. Meselen: 0501234567");
                 LblUnderPhoneNumberCustomer.BackColor = Color.Maroon;
@@ -1698,16 +1641,12 @@ namespace LibraryApp.Forms
                     if (orderItem.ReturnTime.ToString() == "")
                     {
                         Book book = context.Books.Find(orderItem.BookId);
-                        decimal price = Math.Round(Convert.ToDecimal(DateTime.Now.Subtract(orderItem.EndRentTime).TotalDays) * Math.Round(book.MonthlyPrice*5/1000 / 30, 5), 2);
+                        decimal price = Math.Round(Convert.ToDecimal(DateTime.Now.Subtract(orderItem.EndRentTime).TotalDays) * Math.Round(book.MonthlyPrice * 5 / 1000 / 30, 5), 2);
                         if (orderItem.EndRentTime > DateTime.Now)
                         {
                             price = 0;
                         }
-<<<<<<< HEAD
-                        DgvBookInRetorn.Rows.Add(book.Id, book.Name, book.Writter, order.Created.ToString("dd-MM-yyyy"), orderItem.EndRentTime.ToString("dd-MM-yyyy"), Convert.ToInt32(Math.Round(DateTime.Now.Subtract(order.Created).TotalDays))* Math.Round(book.MonthlyPrice / 30, 2), price, Convert.ToInt32(Math.Round(DateTime.Now.Subtract(order.Created).TotalDays)) * Math.Round(book.MonthlyPrice / 30, 2) + price);
-=======
-                        DgvBookInRetorn.Rows.Add(book.Id, book.Name, book.Writter, order.Created.ToString("dd-MM-yyyy"), orderItem.EndRentTime.ToString("dd-MM-yyyy"), Math.Round(Convert.ToDecimal(DateTime.Now.Subtract(order.Created).TotalDays) * Math.Round(book.MonthlyPrice / 30, 2), 2), price, Math.Round(Convert.ToDecimal(DateTime.Now.Subtract(order.Created).TotalDays) * Math.Round(book.MonthlyPrice / 30, 2), 2) + price);
->>>>>>> 09e7dea1dd983e4c651893a507f599af85d416b1
+                        DgvBookInRetorn.Rows.Add(book.Id, book.Name, book.Writter, order.Created.ToString("dd-MM-yyyy"), orderItem.EndRentTime.ToString("dd-MM-yyyy"), Math.Round(Convert.ToDecimal(DateTime.Now.Subtract(order.Created).TotalDays)) * Math.Round(book.MonthlyPrice / 30, 2), price, Math.Round(Convert.ToDecimal(DateTime.Now.Subtract(order.Created).TotalDays)) * Math.Round(book.MonthlyPrice / 30, 2) + price);
                     }
                 }
             }
@@ -1758,11 +1697,11 @@ namespace LibraryApp.Forms
             }
             LblbookcountinReturn.Visible = true;
             LblAmmountInRetorn.Visible = true;
-            LblbookcountinReturn.Text = ReturnBook.Count.ToString() +" kitab"; ;
+            LblbookcountinReturn.Text = ReturnBook.Count.ToString() + " kitab"; ;
             decimal ammount = 0;
             foreach (int id in ReturnBook)
             {
-                ammount+=Convert.ToDecimal(DgvBookInRetorn.Rows[id].Cells[7].Value);
+                ammount += Convert.ToDecimal(DgvBookInRetorn.Rows[id].Cells[7].Value);
             }
             LblAmmountInRetorn.Text = ammount.ToString("#.##") + "  AZN";
         }
@@ -1832,53 +1771,30 @@ namespace LibraryApp.Forms
                     {
                         if (orderItem.ReturnTime.ToString() == "")
                         {
-<<<<<<< HEAD
-                            decimal price = Math.Round(Convert.ToDecimal(DateTime.Now.Subtract(orderItem.EndRentTime).TotalDays) * Math.Round(book.MonthlyPrice * 5 / 1000 / 30, 5), 2);
-                            if (orderItem.EndRentTime > DateTime.Now)
-                            {
-                                price = 0;
-                            }
                             if (book.Id == orderItem.BookId)
                             {
+                                decimal price = Math.Round(Convert.ToDecimal(DateTime.Now.Subtract(orderItem.EndRentTime).TotalDays) * Math.Round(book.MonthlyPrice * 5 / 1000 / 30, 5), 2);
+                                if (orderItem.EndRentTime > DateTime.Now)
+                                {
+                                    price = 0;
+                                }
                                 if (CbbForTimeReturnBook.SelectedIndex == 0)
                                 {
 
-                                    DgvViewBooksinrent.Rows.Add(book.Id, book.Name, order.Customer.Name, book.MonthlyPrice + "  AZN", order.Created.ToString("dd-MM-yyyy"), orderItem.EndRentTime.ToString("dd-MM-yyyy"), Convert.ToInt32(Math.Round(DateTime.Now.Subtract(order.Created).TotalDays)) * Math.Round(book.MonthlyPrice / 30, 2), price, Convert.ToInt32(Math.Round(DateTime.Now.Subtract(order.Created).TotalDays)) * Math.Round(book.MonthlyPrice / 30, 2) + price);
+                                    DgvViewBooksinrent.Rows.Add(book.Id, book.Name, order.Customer.Name, book.MonthlyPrice + "  AZN", order.Created.ToString("dd-MM-yyyy"), orderItem.EndRentTime.ToString("dd-MM-yyyy"), Math.Round(Convert.ToDecimal(DateTime.Now.Subtract(order.Created).TotalDays)) * Math.Round(book.MonthlyPrice / 30, 2), price, Math.Round(Convert.ToDecimal(DateTime.Now.Subtract(order.Created).TotalDays)) * Math.Round(book.MonthlyPrice / 30, 2) + price);
                                 }
-                                else if (CbbForTimeReturnBook.SelectedIndex == 1 && Math.Round(orderItem.EndRentTime.Subtract(DateTime.Now).TotalDays) ==1)
+                                else if (CbbForTimeReturnBook.SelectedIndex == 1 && Math.Round(orderItem.EndRentTime.Subtract(DateTime.Now).TotalDays) == 1)
                                 {
-                                    DgvViewBooksinrent.Rows.Add(book.Id, book.Name, order.Customer.Name, book.MonthlyPrice + "  AZN", order.Created.ToString("dd-MM-yyyy"), orderItem.EndRentTime.ToString("dd-MM-yyyy"), Convert.ToInt32(Math.Round(DateTime.Now.Subtract(order.Created).TotalDays)) * Math.Round(book.MonthlyPrice / 30, 2), price, Convert.ToInt32(Math.Round(DateTime.Now.Subtract(order.Created).TotalDays)) * Math.Round(book.MonthlyPrice / 30, 2) + price);
+                                    DgvViewBooksinrent.Rows.Add(book.Id, book.Name, order.Customer.Name, book.MonthlyPrice + "  AZN", order.Created.ToString("dd-MM-yyyy"), orderItem.EndRentTime.ToString("dd-MM-yyyy"), Math.Round(Convert.ToDecimal(DateTime.Now.Subtract(order.Created).TotalDays)) * Math.Round(book.MonthlyPrice / 30, 2), price, Math.Round(Convert.ToDecimal(DateTime.Now.Subtract(order.Created).TotalDays)) * Math.Round(book.MonthlyPrice / 30, 2) + price);
                                 }
                                 else if (CbbForTimeReturnBook.SelectedIndex == 2 && Math.Round(orderItem.EndRentTime.Subtract(DateTime.Now).TotalDays) == 0)
                                 {
-                                    DgvViewBooksinrent.Rows.Add(book.Id, book.Name, order.Customer.Name, book.MonthlyPrice + "  AZN", order.Created.ToString("dd-MM-yyyy"), orderItem.EndRentTime.ToString("dd-MM-yyyy"), Convert.ToInt32(Math.Round(DateTime.Now.Subtract(order.Created).TotalDays)) * Math.Round(book.MonthlyPrice / 30, 2), price, Convert.ToInt32(Math.Round(DateTime.Now.Subtract(order.Created).TotalDays)) * Math.Round(book.MonthlyPrice / 30, 2) + price);
+                                    DgvViewBooksinrent.Rows.Add(book.Id, book.Name, order.Customer.Name, book.MonthlyPrice + "  AZN", order.Created.ToString("dd-MM-yyyy"), orderItem.EndRentTime.ToString("dd-MM-yyyy"), Math.Round(Convert.ToDecimal(DateTime.Now.Subtract(order.Created).TotalDays)) * Math.Round(book.MonthlyPrice / 30, 2), price, Math.Round(Convert.ToDecimal(DateTime.Now.Subtract(order.Created).TotalDays)) * Math.Round(book.MonthlyPrice / 30, 2) + price);
                                 }
                                 else if (CbbForTimeReturnBook.SelectedIndex == 3 && Math.Round(orderItem.EndRentTime.Subtract(DateTime.Now).TotalDays) < 0)
                                 {
-                                    DgvViewBooksinrent.Rows.Add(book.Id, book.Name, order.Customer.Name, book.MonthlyPrice + "  AZN", order.Created.ToString("dd-MM-yyyy"), orderItem.EndRentTime.ToString("dd-MM-yyyy"), Convert.ToInt32(Math.Round(DateTime.Now.Subtract(order.Created).TotalDays)) * Math.Round(book.MonthlyPrice / 30, 2), price, Convert.ToInt32(Math.Round(DateTime.Now.Subtract(order.Created).TotalDays)) * Math.Round(book.MonthlyPrice / 30, 2) + price);
+                                    DgvViewBooksinrent.Rows.Add(book.Id, book.Name, order.Customer.Name, book.MonthlyPrice + "  AZN", order.Created.ToString("dd-MM-yyyy"), orderItem.EndRentTime.ToString("dd-MM-yyyy"), Math.Round(Convert.ToDecimal(DateTime.Now.Subtract(order.Created).TotalDays)) * Math.Round(book.MonthlyPrice / 30, 2), price, Math.Round(Convert.ToDecimal(DateTime.Now.Subtract(order.Created).TotalDays)) * Math.Round(book.MonthlyPrice / 30, 2) + price);
                                 }
-=======
-                            break;
-                        }
-                        if (book.Id == orderItem.BookId)
-                        {
-                            if (CbbForTimeReturnBook.SelectedIndex == 0)
-                            {
-
-                                DgvViewBooksinrent.Rows.Add(book.Id, book.Name, book.Writter, book.MonthlyPrice + "  AZN         ", order.Created.ToString("dd-MM-yyyy"), orderItem.EndRentTime.ToString("dd-MM-yyyy"), Math.Round(Convert.ToDecimal(orderItem.EndRentTime.Subtract(order.Created).TotalDays) * Math.Round(book.MonthlyPrice / 30, 2), 2) + "  AZN", Math.Round(Convert.ToDecimal(DateTime.Now.Subtract(order.Created).TotalDays) * Math.Round(book.MonthlyPrice / 30, 2), 2) + "  AZN");
-                            }
-                            else if (CbbForTimeReturnBook.SelectedIndex == 1 && Math.Round(orderItem.EndRentTime.Subtract(DateTime.Now).TotalDays) ==1)
-                            {
-                                DgvViewBooksinrent.Rows.Add(book.Id, book.Name, book.Writter, book.MonthlyPrice + "  AZN         ", order.Created.ToString("dd-MM-yyyy"), orderItem.EndRentTime.ToString("dd-MM-yyyy"), Math.Round(Convert.ToDecimal(orderItem.EndRentTime.Subtract(order.Created).TotalDays) * Math.Round(book.MonthlyPrice / 30, 2), 2) + "  AZN", Math.Round(Convert.ToDecimal(DateTime.Now.Subtract(order.Created).TotalDays) * Math.Round(book.MonthlyPrice / 30, 2), 2) + "  AZN");
-                            }
-                            else if (CbbForTimeReturnBook.SelectedIndex == 2 && Math.Round(orderItem.EndRentTime.Subtract(DateTime.Now).TotalDays) == 0)
-                            {
-                                DgvViewBooksinrent.Rows.Add(book.Id, book.Name, book.Writter, book.MonthlyPrice + "  AZN         ", order.Created.ToString("dd-MM-yyyy"), orderItem.EndRentTime.ToString("dd-MM-yyyy"), Math.Round(Convert.ToDecimal(orderItem.EndRentTime.Subtract(order.Created).TotalDays) * Math.Round(book.MonthlyPrice / 30, 2), 2) + "  AZN", Math.Round(Convert.ToDecimal(DateTime.Now.Subtract(order.Created).TotalDays) * Math.Round(book.MonthlyPrice / 30, 2), 2) + "  AZN");
-                            }
-                            else if (CbbForTimeReturnBook.SelectedIndex == 3 && Math.Round(orderItem.EndRentTime.Subtract(DateTime.Now).TotalDays) < 0)
-                            {
-                                DgvViewBooksinrent.Rows.Add(book.Id, book.Name, book.Writter, book.MonthlyPrice + "  AZN         ", order.Created.ToString("dd-MM-yyyy"), orderItem.EndRentTime.ToString("dd-MM-yyyy"), Math.Round(Convert.ToDecimal(orderItem.EndRentTime.Subtract(order.Created).TotalDays) * Math.Round(book.MonthlyPrice / 30, 2), 2) + "  AZN", Math.Round(Convert.ToDecimal(DateTime.Now.Subtract(order.Created).TotalDays) * Math.Round(book.MonthlyPrice / 30, 2), 2) + "  AZN");
->>>>>>> 09e7dea1dd983e4c651893a507f599af85d416b1
                             }
                         }
                     }
@@ -1919,7 +1835,7 @@ namespace LibraryApp.Forms
         {
             if (BtnAddOrderBook.BackColor == Color.LightGray)
             {
-                LblUnderReturnBook.BackColor=Color.Maroon;
+                LblUnderReturnBook.BackColor = Color.Maroon;
                 LblUnderCountOrderBook.BackColor = Color.Maroon;
                 MessageBox.Show("Xanaları doldurun.");
                 return;
@@ -2007,13 +1923,14 @@ namespace LibraryApp.Forms
             {
                 BtnAddOrder.Visible = true;
             }
-            BtnAddOrderBook.BackColor = Color.LightGray;        }
+            BtnAddOrderBook.BackColor = Color.LightGray;
+        }
 
         private void TxtCountOrderBook_TextChanged(object sender, EventArgs e)
         {
-            if(TxtCountOrderBook.Text!=""&& TxtCountOrderBook.Text != "Sayı"&& dateTimePicker1.Value.ToString("dd-MM-yyyy") != DateTime.Now.ToString("dd-MM-yyyy"))
+            if (TxtCountOrderBook.Text != "" && TxtCountOrderBook.Text != "Sayı" && dateTimePicker1.Value.ToString("dd-MM-yyyy") != DateTime.Now.ToString("dd-MM-yyyy"))
             {
-                BtnAddOrderBook.BackColor = Color.FromArgb(255,130,0);
+                BtnAddOrderBook.BackColor = Color.FromArgb(255, 130, 0);
             }
         }
 
@@ -2043,9 +1960,9 @@ namespace LibraryApp.Forms
                         foreach (Book book in books)
                         {
                             string returntimebook = "-";
-                            if (orderItem.ReturnTime.ToString()!= "")
+                            if (orderItem.ReturnTime.ToString() != "")
                             {
-                                returntimebook = orderItem.ReturnTime.Value.Day.ToString()+"-"+ orderItem.ReturnTime.Value.Month.ToString()+"-"+ orderItem.ReturnTime.Value.Year.ToString();
+                                returntimebook = orderItem.ReturnTime.Value.Day.ToString() + "-" + orderItem.ReturnTime.Value.Month.ToString() + "-" + orderItem.ReturnTime.Value.Year.ToString();
                             }
 
                             DgvReport.Rows.Add(customer.Name, customer.Surname, customer.PhoneNumber, customer.CreateAt.ToString("dd-MM-yyyy"), customer.DateBirth.ToString("dd-MM-yyyy"), book.Name, order.Created.ToString("dd-MM-yyyy"), orderItem.EndRentTime.ToString("dd-MM-yyyy"), returntimebook, orderItem.Price);
@@ -2057,7 +1974,7 @@ namespace LibraryApp.Forms
         }
 
         public void Report()
-       {
+        {
             int a = 1;
             var workbook = new XLWorkbook();
             var worksheet = workbook.Worksheets.Add("Sheet");
@@ -2076,13 +1993,13 @@ namespace LibraryApp.Forms
 
             foreach (Customer customer in customers)
             {
-                List<Order> orders = context.Orders.Include("OrderItems").Where(o => o.Created >= DtpStart.Value && o.Created <= DtpEnd.Value&&o.CustomerId==customer.Id).ToList();
-                foreach(Order order in orders)
+                List<Order> orders = context.Orders.Include("OrderItems").Where(o => o.Created >= DtpStart.Value && o.Created <= DtpEnd.Value && o.CustomerId == customer.Id).ToList();
+                foreach (Order order in orders)
                 {
-                    foreach(OrderItem orderItem in order.OrderItems)
+                    foreach (OrderItem orderItem in order.OrderItems)
                     {
-                        List<Book> books = context.Books.Where(b=>b.Id==orderItem.BookId).ToList();
-                        foreach(Book book in books)
+                        List<Book> books = context.Books.Where(b => b.Id == orderItem.BookId).ToList();
+                        foreach (Book book in books)
                         {
 
                             a++;
@@ -2099,9 +2016,9 @@ namespace LibraryApp.Forms
                         }
                     }
                 }
-            } 
+            }
             SfdReport.FileName = "Hesabat";
-            DialogResult r= SfdReport.ShowDialog();
+            DialogResult r = SfdReport.ShowDialog();
             if (r == DialogResult.OK)
             {
                 string path = SfdReport.FileName;
@@ -2113,7 +2030,7 @@ namespace LibraryApp.Forms
                     path += x;
 
                 }
-                workbook.SaveAs(path+".xlsx");
+                workbook.SaveAs(path + ".xlsx");
 
 
             }
@@ -2159,7 +2076,8 @@ namespace LibraryApp.Forms
                 {
                     BtnShowReport.Text = "Report";
                 }
-            }else if (BtnShowReport.Text == "Report")
+            }
+            else if (BtnShowReport.Text == "Report")
             {
                 Report();
                 MessageBox.Show("Yaddaşa yazıldı.");

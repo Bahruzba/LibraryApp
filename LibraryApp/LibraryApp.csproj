@@ -120,6 +120,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\MeanForm.resx">
       <DependentUpon>MeanForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201907041931077_CreateStructurDatabase.resx">
       <DependentUpon>201907041931077_CreateStructurDatabase.cs</DependentUpon>
@@ -144,10 +145,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
-<<<<<<< HEAD
       <DesignTime>True</DesignTime>
-=======
->>>>>>> 09e7dea1dd983e4c651893a507f599af85d416b1
     </Compile>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
@@ -163,15 +161,11 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-<<<<<<< HEAD
   <ItemGroup>
     <Content Include="Images\21319111-imagen-con-el-alumno.jpg" />
     <Content Include="Images\istockphoto-517473528-1024x1024.jpg" />
     <None Include="Resources\istockphoto-517473528-1024x1024.jpg" />
     <None Include="Resources\21319111-imagen-con-el-alumno.jpg" />
   </ItemGroup>
-=======
-  <ItemGroup />
->>>>>>> 09e7dea1dd983e4c651893a507f599af85d416b1
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
