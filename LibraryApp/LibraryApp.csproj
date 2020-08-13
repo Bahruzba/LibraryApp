@@ -87,25 +87,9 @@
     <Compile Include="Forms\MeanForm.Designer.cs">
       <DependentUpon>MeanForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201907041931077_CreateStructurDatabase.cs" />
-    <Compile Include="Migrations\201907041931077_CreateStructurDatabase.Designer.cs">
-      <DependentUpon>201907041931077_CreateStructurDatabase.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201907051926108_UpdateOrderItemTable.cs" />
-    <Compile Include="Migrations\201907051926108_UpdateOrderItemTable.Designer.cs">
-      <DependentUpon>201907051926108_UpdateOrderItemTable.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201907061237215_updateDatabaseCustomerItem.cs" />
-    <Compile Include="Migrations\201907061237215_updateDatabaseCustomerItem.Designer.cs">
-      <DependentUpon>201907061237215_updateDatabaseCustomerItem.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201907061341468_UpdateDatabaseBookitem.cs" />
-    <Compile Include="Migrations\201907061341468_UpdateDatabaseBookitem.Designer.cs">
-      <DependentUpon>201907061341468_UpdateDatabaseBookitem.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201907071715559_UpdateSeed.cs" />
-    <Compile Include="Migrations\201907071715559_UpdateSeed.Designer.cs">
-      <DependentUpon>201907071715559_UpdateSeed.cs</DependentUpon>
+    <Compile Include="Migrations\202008130756132_init.cs" />
+    <Compile Include="Migrations\202008130756132_init.Designer.cs">
+      <DependentUpon>202008130756132_init.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Book.cs" />
@@ -122,20 +106,8 @@
       <DependentUpon>MeanForm.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201907041931077_CreateStructurDatabase.resx">
-      <DependentUpon>201907041931077_CreateStructurDatabase.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201907051926108_UpdateOrderItemTable.resx">
-      <DependentUpon>201907051926108_UpdateOrderItemTable.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201907061237215_updateDatabaseCustomerItem.resx">
-      <DependentUpon>201907061237215_updateDatabaseCustomerItem.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201907061341468_UpdateDatabaseBookitem.resx">
-      <DependentUpon>201907061341468_UpdateDatabaseBookitem.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201907071715559_UpdateSeed.resx">
-      <DependentUpon>201907071715559_UpdateSeed.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202008130756132_init.resx">
+      <DependentUpon>202008130756132_init.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
